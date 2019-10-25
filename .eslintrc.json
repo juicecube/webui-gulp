@@ -1,0 +1,23 @@
+{
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "amd": true,
+    "mocha": true,
+    "protractor": true
+  },
+  "globals": {
+    "G": true,
+    "Log": true,
+    "__DEV__": true
+  },
+  "parser": "babel-eslint",
+  "plugins": [],
+  "extends": ["webyom"],
+  "rules": {
+    "no-console": 0,
+    // React rules
+    "react/forbid-dom-props": [2, {"forbid": ["style"]}]
+  }
+}
