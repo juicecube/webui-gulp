@@ -4187,10 +4187,10 @@ gulp-concat@^2.6.1:
     through2 "^2.0.0"
     vinyl "^2.0.0"
 
-gulp-digest-versioning@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/gulp-digest-versioning/-/gulp-digest-versioning-0.3.0.tgz#2c4bcf8cf8c3f1a75d24bfc2fc3887f8379fd6f4"
-  integrity sha512-WlQezSlMXSDfMGCY73fGnm74oJYjUh5hAGEySLkOirwehmj3A30xwrSyWFMTrDdFx6mUZVD9BhJMyxLxJFvIxg==
+gulp-digest-versioning@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/gulp-digest-versioning/-/gulp-digest-versioning-0.4.0.tgz#481c94dec5b42180be5a84456aabf544e79fc422"
+  integrity sha512-G5xxzvd07vtvXfFXt0/rZ8Ty/x/ugJlWIJeS3BYd+4jxIlSVi3X2WAO5JWRY6hPLWflyjED/IRJmpXJdYW50CA==
   dependencies:
     cp "^0.2.0"
     plugin-error "^1.0.0"
@@ -4231,10 +4231,10 @@ gulp-html-i18n@^0.15.0:
     vinyl "^2.1.0"
     yamljs "^0.2.8"
 
-gulp-html-optimizer@^1.46.0:
-  version "1.46.0"
-  resolved "https://registry.yarnpkg.com/gulp-html-optimizer/-/gulp-html-optimizer-1.46.0.tgz#692f37ddc13e6af68a5a77df23357bf2f82dd4b8"
-  integrity sha512-ZiQOEPlQ6lRwdvIxuVYSS+Htc52hCTeBRkZbxRaN1pNxQgXrDuB2z5T9md2hUkrufuXEqjFEoJu8md4JaZy0Mw==
+gulp-html-optimizer@^1.46.1:
+  version "1.46.1"
+  resolved "https://registry.yarnpkg.com/gulp-html-optimizer/-/gulp-html-optimizer-1.46.1.tgz#ce5c77cb9911ac8e4999da0bda33c6f68e6de3f0"
+  integrity sha512-W+dpFZLYt+2CTOxVVJTTrIkYO5zfY4f+JcxTkI5bVYeNEwhDwoGxmopL/INl35o8tNKwo3Jw4+Td3NPY/LrP2w==
   dependencies:
     clean-css "^3.4.24"
     gulp-amd-bundler "^1.29.0"

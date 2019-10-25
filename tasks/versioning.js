@@ -1,4 +1,5 @@
-const path = require('path'),
+const fs = require('fs'),
+  path = require('path'),
   gulp = require('../').gulp(),
   conf = require('./conf'),
   util = require('./util'),
@@ -34,7 +35,6 @@ gulp.task(
   ]
 );
 
-// digest versioning html
 gulp.task('versioning:html', function () {
   return gulp
     .src(['dist/**/*.html'])
@@ -48,4 +48,13 @@ gulp.task('versioning:html', function () {
       })
     )
     .pipe(gulp.dest('dist'));
+});
+
+gulp.task('versioning:clean', function (done) {
+  digestVersioning.getRenamedFiles().forEach(function (fileName) {
+    if (fs.existsSync(fileName)) {
+      fs.unlinkSync(fileName);
+    }
+  });
+  done();
 });
