@@ -53,7 +53,7 @@ gulp.task('bundle:ts', function () {
     );
 });
 
-gulp.task('bundle:html:init', function () {
+gulp.task('bundle:html:init', ['mt', 'sass', 'less'], function () {
   return gulp
     .src(
       util.appendSrcExclusion([
@@ -76,9 +76,12 @@ gulp.task('bundle:html:init', function () {
 });
 
 // optimize html
-gulp.task('bundle:html:optimize', ['bundle:html:init', 'mt'], function () {
+gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
   return gulp
-    .src(['dist/**/*.html'])
+    .src([
+      'dist/**/*.html',
+      '!dist/zh-CN/**/*.html'
+    ])
     .pipe(lazyTasks.lazyHtmlI18nTask()())
     .pipe(htmlI18n.restorePath())
     .pipe(

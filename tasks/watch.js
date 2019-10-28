@@ -64,48 +64,11 @@ gulp.task('watch', function () {
   );
 
   gulp.watch(
-    util.appendSrcExclusion(['src/**/main.less', 'src/**/*-main.less']),
+    util.appendSrcExclusion(['src/**/*.scss', 'src/**/*.less']),
     function (evt) {
       const filePath = evt.path;
-      const part = (path.dirname(filePath) + '/')
-        .split('/src/')
-        .pop();
       log(chalk.cyan('[changed]'), filePath);
-      return gulp
-        .src(filePath)
-        .pipe(lazyTasks.stylelintTask())
-        .pipe(less())
-        .on('error', function (err) {
-          log(chalk.red(err.message));
-        })
-        .pipe(lazyTasks.lazyPostcssTask())
-        .on('error', function (err) {
-          log(chalk.red(err.message));
-        })
-        .pipe(gulp.dest('dist/' + part));
-    }
-  );
-
-  gulp.watch(
-    util.appendSrcExclusion(['src/**/main.scss', 'src/**/*-main.scss']),
-    function (evt) {
-      const filePath = evt.path;
-      const part = (path.dirname(filePath) + '/')
-        .split('/src/')
-        .pop();
-      log(chalk.cyan('[changed]'), filePath);
-      return gulp
-        .src(filePath)
-        .pipe(lazyTasks.stylelintTask())
-        .pipe(sass())
-        .on('error', function (err) {
-          log(chalk.red(err.message));
-        })
-        .pipe(lazyTasks.lazyPostcssTask())
-        .on('error', function (err) {
-          log(chalk.red(err.message));
-        })
-        .pipe(gulp.dest('dist/' + part));
+      return gulp.start('bundle:html');
     }
   );
 
