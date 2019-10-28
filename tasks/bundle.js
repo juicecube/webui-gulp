@@ -44,7 +44,7 @@ gulp.task('bundle:ts', function () {
             file: outPath,
             format: 'iife',
             name: 'library',
-            sourcemap: conf.IS_PRODUCTION
+            sourcemap: true
           });
         }).then(function () {
           next();
@@ -76,7 +76,7 @@ gulp.task('bundle:html:init', function () {
 });
 
 // optimize html
-gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
+gulp.task('bundle:html:optimize', ['bundle:html:init', 'mt'], function () {
   return gulp
     .src(['dist/**/*.html'])
     .pipe(lazyTasks.lazyHtmlI18nTask()())
@@ -122,9 +122,6 @@ gulp.task(
         propertyMerge({
           properties: Object.assign(
             {},
-            {
-              md5map: JSON.stringify(md5map).replace(/"/g, '\\"')
-            },
             conf
           )
         })

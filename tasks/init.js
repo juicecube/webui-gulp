@@ -55,22 +55,6 @@ gulp.task('eslint', function () {
   return stream;
 });
 
-// move html
-gulp.task('html', function () {
-  return gulp
-    .src(
-      util.appendSrcExclusion([
-        'src/**/**.html',
-        '!src/**/*.layout.html',
-        '!src/**/*.inc.html',
-        '!src/**/*.tpl.html'
-      ]),
-      {base: 'src'}
-    )
-    .pipe(lazyTasks.lazyInitHtmlTask()())
-    .pipe(gulp.dest('dist'));
-});
-
 // compile less
 gulp.task('less', ['less:main']);
 

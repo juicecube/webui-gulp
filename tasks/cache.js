@@ -18,8 +18,10 @@ function replaceExtName(filePath, extName) {
   if (extName === 0) {
     return filePath;
   }
-  if (ext == '.js' || ext == '.jsx' || ext == '.ts' || ext == '.tsx') {
+  if ((/\.(js|jsx|ts|tsx)$/).test(filePath)) {
     extName = '.js';
+  } else if ((/\.tpl\.html$/).test(filePath)) {
+    extName = ext + '.js';
   } else {
     extName = ext;
   }

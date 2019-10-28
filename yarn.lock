@@ -879,7 +879,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@^6.22.0, babel-runtime@^6.23.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
@@ -4349,7 +4349,7 @@ gulp-minifier@^3.0.0:
     through2 "^3.0.1"
     vinyl "^2.1.0"
 
-gulp-mt2amd@^1.15.0:
+gulp-mt2amd@^1.14.0, gulp-mt2amd@^1.15.0:
   version "1.15.0"
   resolved "https://registry.yarnpkg.com/gulp-mt2amd/-/gulp-mt2amd-1.15.0.tgz#cf0fa762da511e49fc2012e1b7fc06b99c642c07"
   integrity sha512-sIPVzmK75roapOpLyNQPRWLL7YPawCj1ku/Iu7OdsjmaG7mYi9lnVaMNQVLyk78ClHA9I2mBqieWfEScdfm+0A==
@@ -8986,6 +8986,16 @@ rollup-plugin-commonjs@^10.1.0:
     resolve "^1.11.0"
     rollup-pluginutils "^2.8.1"
 
+rollup-plugin-mt2amd@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-mt2amd/-/rollup-plugin-mt2amd-1.9.0.tgz#dd594c2412cc18b07ff90ae0181aed8c88168722"
+  integrity sha512-P6KeB5BeBcBMewmXHYdrHqGxoVn6xHMs2oWCugD4DlXfqU/et9t3HgoiKaoK6CvEJTe2WQdYxG0e4m4DZMnBTg==
+  dependencies:
+    babel-runtime "^6.23.0"
+    gulp-mt2amd "^1.14.0"
+    rollup-pluginutils "^2.0.1"
+    vinyl "^2.1.0"
+
 rollup-plugin-node-resolve@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-node-resolve/-/rollup-plugin-node-resolve-5.2.0.tgz#730f93d10ed202473b1fb54a5997a7db8c6d8523"
@@ -9005,7 +9015,7 @@ rollup-plugin-typescript@^1.0.1:
     resolve "^1.10.0"
     rollup-pluginutils "^2.5.0"
 
-rollup-pluginutils@^2.5.0, rollup-pluginutils@^2.8.1:
+rollup-pluginutils@^2.0.1, rollup-pluginutils@^2.5.0, rollup-pluginutils@^2.8.1:
   version "2.8.2"
   resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-2.8.2.tgz#72f2af0748b592364dbd3389e600e5a9444a351e"
   integrity sha512-EEp9NhnUkwY8aif6bxgovPHMoMoNr2FulJziTndpt5H9RdwC47GSGuII9XxpSdzVGM0GWrNPHV6ie1LTNJPaLQ==

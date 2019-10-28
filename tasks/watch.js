@@ -43,13 +43,12 @@ gulp.task('watch', function () {
     [
       'src/**/*.layout.html',
       'src/**/*.inc.+(html|js|css)',
-      'src/**/*.pr.tpl.html',
-      'src/**/*.pr.md'
+      'src/**/*.tpl.html'
     ],
     function (evt) {
       const filePath = evt.path;
       log(chalk.cyan('[changed]'), filePath);
-      return gulp.start('html');
+      return gulp.start('bundle:html');
     }
   );
 
