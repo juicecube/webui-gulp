@@ -13,6 +13,7 @@ gulp.task('mt:tpl', function () {
       cache('mt', 'src', function () {
         return mt2amd({
           strictMode: true,
+          commonjs: true,
           babel: util.babel
         });
       })
