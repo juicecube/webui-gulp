@@ -53,11 +53,16 @@ gulp.task('watch', function () {
     }
   );
 
-  gulp.watch('src/sw.js', function (evt) {
-    const filePath = evt.path;
-    log(chalk.cyan('[changed]'), filePath);
-    return gulp.start('sw');
-  });
+  gulp.watch(
+    [
+      'src/**/*.ts'
+    ],
+    function (evt) {
+      const filePath = evt.path;
+      log(chalk.cyan('[changed]'), filePath);
+      return gulp.start('bundle:ts');
+    }
+  );
 
   gulp.watch(
     util.appendSrcExclusion(['src/**/main.less', 'src/**/*-main.less']),

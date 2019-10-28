@@ -1,6 +1,7 @@
 /* global process */
 
 const fs = require('fs'),
+  path = require('path'),
   gulp = require('../').gulp(),
   conf = require('./conf'),
   util = require('./util'),
@@ -8,6 +9,10 @@ const fs = require('fs'),
   useref = require('gulp-useref'),
   userefCostomBlocks = require('./useref-custom-blocks'),
   lazyTasks = require('./lazy-tasks'),
+  rollup = require('rollup'),
+  rollupTypescript = require('rollup-plugin-typescript'),
+  rollupNodeResolve = require('rollup-plugin-node-resolve'),
+  rollupCommonjs = require('rollup-plugin-commonjs'),
   htmlI18n = require('gulp-html-i18n'),
   htmlOptimizer = require('gulp-html-optimizer'),
   propertyMerge = require('gulp-property-merge');
@@ -16,7 +21,37 @@ const md5map = {};
 const doMinify = conf.IS_PRODUCTION && !process.env.NO_MINIFY;
 
 // bundle
-gulp.task('bundle', ['bundle:html']);
+gulp.task('bundle', ['bundle:html', 'bundle:ts']);
+
+gulp.task('bundle:ts', function () {
+  return gulp
+    .src(['src/**/main.ts'])
+    .pipe(
+      through.obj(function (file, enc, next) {
+        const outPath = path.join('dist', path.relative(file.base, file.path).replace(/\.ts$/, '.js'));
+        rollup.rollup({
+          input: file.path,
+          plugins: [
+            rollupNodeResolve({
+              mainFields: ['module', 'browser', 'main'],
+              preferBuiltins: false
+            }),
+            rollupCommonjs(),
+            rollupTypescript()
+          ]
+        }).then(function (bundle) {
+          return bundle.write({
+            file: outPath,
+            format: 'iife',
+            name: 'library',
+            sourcemap: conf.IS_PRODUCTION
+          });
+        }).then(function () {
+          next();
+        });
+      })
+    );
+});
 
 gulp.task('bundle:html:init', function () {
   return gulp

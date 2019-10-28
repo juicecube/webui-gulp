@@ -9,19 +9,21 @@ const path = require('path'),
   conf = require('./conf');
 
 const ESLINT_RC_FILE = '.eslintrc.json';
+const ESLINT_RC_TS_FILE = '.eslintrc.ts.json';
 const PRETTIER_RC_FILE = '.prettierrc.json';
 
 function prettier({logFile} = {}) {
-  let eslintConfig = util.safeRequireJson(ESLINT_RC_FILE);
-  let prettierOptions = util.safeRequireJson(PRETTIER_RC_FILE);
+  const eslintConfig = util.safeRequireJson(ESLINT_RC_FILE);
+  const eslintTsConfig = util.safeRequireJson(ESLINT_RC_TS_FILE);
+  const prettierOptions = util.safeRequireJson(PRETTIER_RC_FILE);
   if (!eslintConfig) {
     throw new Error('gulp prettier: ' + ESLINT_RC_FILE + ' file not exist!');
   }
   return through.obj(function (file, enc, next) {
     logFile && log(chalk.blue('prettier ') + file.path);
-    let content = prettierEslint({
+    const content = prettierEslint({
       text: file.contents.toString(),
-      eslintConfig: eslintConfig,
+      eslintConfig: (/\.tsx?$/).test(file.path) ? eslintTsConfig : eslintConfig,
       prettierOptions: prettierOptions,
       fallbackPrettierOptions: {}
     });
