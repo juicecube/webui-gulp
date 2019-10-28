@@ -5,16 +5,11 @@ const _ = require('underscore'),
   path = require('path'),
   log = require('fancy-log'),
   chalk = require('chalk');
-const DEFAULT_CONFIG = require('../config');
 
 if (fs.realpathSync(path.join(process.cwd(), 'node_modules/@mlz/webui-gulp/tasks')) != __dirname) {
   log(chalk.red('Please run gulp in the project root dir.'));
   process.exit(1);
 }
-
-const ENV = DEFAULT_CONFIG.envs[process.env.NODE_ENV]
-  ? process.env.NODE_ENV
-  : 'local';
 
 let config;
 try {
@@ -23,12 +18,12 @@ try {
   config = {};
 }
 
+const ENV = config.envs && config.envs[process.env.NODE_ENV]
+  ? process.env.NODE_ENV
+  : 'local';
+
 const conf = (function () {
-  const defaultConf = Object.assign(
-    {},
-    DEFAULT_CONFIG,
-    DEFAULT_CONFIG.envs[ENV]
-  );
+  const defaultConf = {};
   const conf = _.omit(
     Object.assign(
       {},
@@ -57,7 +52,7 @@ conf.ESLINT_FIX = process.env.ESLINT_FIX == '1';
 conf.APP_VERSION = require(path.resolve('package.json')).version || '';
 conf.ENV = ENV;
 conf.VERSION_DIGEST_LEN = 7;
-conf.IS_PRODUCTION = ENV == 'production';
+conf.IS_PRODUCTION = ENV == 'prd';
 
 let ossAccessKey = null;
 conf.getOssAccessKey = function () {
