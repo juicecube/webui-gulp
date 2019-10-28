@@ -11,5 +11,5 @@ gulp.task('clean-cache', function () {
 });
 
 gulp.task('clean-bundle', function () {
-  return del(['dist/**/__tests__/', 'dist/**/*.tpl.html.js']);
+  return del(['dist/**/__tests__/', 'dist/**/*.tpl.html.js', 'dist/**/*.tpl.html.js.map']);
 });

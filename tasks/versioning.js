@@ -55,6 +55,9 @@ gulp.task('versioning:clean', function (done) {
     if (fs.existsSync(fileName)) {
       fs.unlinkSync(fileName);
     }
+    if (fs.existsSync(fileName + '.map')) {
+      fs.unlinkSync(fileName + '.map');
+    }
   });
   done();
 });
