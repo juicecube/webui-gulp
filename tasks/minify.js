@@ -1,4 +1,5 @@
-const gulp = require('../').gulp(),
+const path = require('path'),
+  gulp = require('../').gulp(),
   conf = require('./conf'),
   cache = require('./cache'),
   gulpif = require('gulp-if'),
@@ -28,7 +29,9 @@ gulp.task('minify', function () {
             },
             minifyJS: {
               sourceMap: {
-                hidden: true
+                getUrl: function (sourcePath) {
+                  return path.basename(sourcePath) + '.map';
+                }
               }
             },
             minifyCSS: {
