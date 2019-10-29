@@ -48,7 +48,7 @@ gulp.task('watch', function () {
     function (evt) {
       const filePath = evt.path;
       log(chalk.cyan('[changed]'), filePath);
-      return gulp.start('bundle:html');
+      return gulp.start(['bundle:ts', 'bundle:html']);
     }
   );
 

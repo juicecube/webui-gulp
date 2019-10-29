@@ -13,6 +13,7 @@ const fs = require('fs'),
   rollupTypescript = require('rollup-plugin-typescript'),
   rollupNodeResolve = require('rollup-plugin-node-resolve'),
   rollupCommonjs = require('rollup-plugin-commonjs'),
+  rollupMt2amd = require('rollup-plugin-mt2amd'),
   htmlI18n = require('gulp-html-i18n'),
   htmlOptimizer = require('gulp-html-optimizer'),
   propertyMerge = require('gulp-property-merge');
@@ -37,7 +38,8 @@ gulp.task('bundle:ts', function () {
               preferBuiltins: false
             }),
             rollupCommonjs(),
-            rollupTypescript()
+            rollupTypescript(),
+            rollupMt2amd({babel: util.babel})
           ]
         }).then(function (bundle) {
           return bundle.write({

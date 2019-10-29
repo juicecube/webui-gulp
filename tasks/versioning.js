@@ -13,9 +13,9 @@ function fixUrl(fileName, relPath, basePath) {
   return conf.cdnBase.replace(/\/$/, '') + '/' + fileName.replace(/^\//, '');
 }
 
-gulp.task('versioning:css', function () {
+gulp.task('versioning:asset', function () {
   return gulp
-    .src(util.appendSrcExclusion(['dist/**/*.css']))
+    .src(util.appendSrcExclusion(['dist/**/*.css', 'dist/**/*.js']))
     .pipe(
       digestVersioning({
         digestLength: conf.VERSION_DIGEST_LEN,
@@ -27,13 +27,6 @@ gulp.task('versioning:css', function () {
     )
     .pipe(gulp.dest('dist'));
 });
-
-gulp.task(
-  'versioning:asset',
-  [
-    'versioning:css'
-  ]
-);
 
 gulp.task('versioning:html', function () {
   return gulp

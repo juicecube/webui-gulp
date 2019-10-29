@@ -45,7 +45,7 @@ gulp.task('imagemin:webp', function (done) {
 });
 
 gulp.task('imagemin:png', ['imagemin:webp'], function () {
-  gulp
+  return gulp
     .src([
       'dist/**/*.png',
       '!dist/**/*.min.png',
@@ -76,7 +76,7 @@ gulp.task('imagemin:png', ['imagemin:webp'], function () {
 });
 
 gulp.task('imagemin:jpg', ['imagemin:webp'], function () {
-  gulp
+  return gulp
     .src([
       'dist/**/*.+(jpg|jpeg)',
       '!dist/**/*.min.+(jpg|jpeg)',
