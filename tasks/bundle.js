@@ -73,7 +73,8 @@ gulp.task('bundle:html:init', ['mt', 'sass', 'less'], function () {
         minifyJS: doMinify,
         minifyCSS: doMinify,
         enableCache: !isWatching(),
-        optimizeRequire: false
+        optimizeRequire: false,
+        babel: util.babel
       })
     )
     .pipe(gulp.dest('dist'));
