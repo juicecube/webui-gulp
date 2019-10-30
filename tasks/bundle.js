@@ -5,6 +5,7 @@ const fs = require('fs'),
   gulp = require('../').gulp(),
   conf = require('./conf'),
   util = require('./util'),
+  isWatching = require('./watch').isWatching,
   through = require('through2'),
   useref = require('gulp-useref'),
   userefCostomBlocks = require('./useref-custom-blocks'),
@@ -71,6 +72,7 @@ gulp.task('bundle:html:init', ['mt', 'sass', 'less'], function () {
         baseDir: 'dist',
         minifyJS: doMinify,
         minifyCSS: doMinify,
+        enableCache: !isWatching(),
         optimizeRequire: false
       })
     )
