@@ -39,7 +39,7 @@ exports.lazyPostcssTask = lazypipe().pipe(
     postcssImport(),
     postcssPresetEnv(),
     postcssPxToViewport({
-      viewportWidth: 750
+      viewportWidth: conf.viewportWidth || 750
     })
   ]
 );

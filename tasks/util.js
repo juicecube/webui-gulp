@@ -113,7 +113,7 @@ exports.postcss = function (file) {
       postcssImport(),
       postcssPresetEnv(),
       postcssPxToViewport({
-        viewportWidth: 750
+        viewportWidth: conf.viewportWidth || 750
       })
     ]);
     stream.pipe(
