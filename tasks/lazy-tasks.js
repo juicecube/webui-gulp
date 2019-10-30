@@ -15,6 +15,7 @@ const path = require('path'),
   postcss = require('gulp-postcss'),
   postcssImport = require('postcss-import'),
   postcssPresetEnv = require('postcss-preset-env'),
+  postcssPxToViewport = require('postcss-px-to-viewport'),
   through = require('through2'),
   htmlI18n = require('gulp-html-i18n'),
   rename = require('gulp-rename'),
@@ -36,7 +37,10 @@ exports.lazyPostcssTask = lazypipe().pipe(
   postcss,
   [
     postcssImport(),
-    postcssPresetEnv()
+    postcssPresetEnv(),
+    postcssPxToViewport({
+      viewportWidth: 750
+    })
   ]
 );
 

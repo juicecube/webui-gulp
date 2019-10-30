@@ -74,7 +74,8 @@ gulp.task('bundle:html:init', ['mt', 'sass', 'less'], function () {
         minifyCSS: doMinify,
         enableCache: !isWatching(),
         optimizeRequire: false,
-        babel: util.babel
+        babel: util.babel,
+        postcss: util.postcss
       })
     )
     .pipe(gulp.dest('dist'));
@@ -96,7 +97,8 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
         minifyCSS: doMinify,
         strictModeTemplate: true,
         isRelativeDependency: util.isRelativeDependency,
-        babel: util.babel
+        babel: util.babel,
+        postcss: util.postcss
       })
     )
     .pipe(

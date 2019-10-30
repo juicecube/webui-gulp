@@ -4,6 +4,10 @@ const fs = require('fs'),
   execFileSync = require('child_process').execFileSync,
   stripJsonComments = require('strip-json-comments'),
   babel = require('gulp-babel'),
+  postcss = require('gulp-postcss'),
+  postcssImport = require('postcss-import'),
+  postcssPresetEnv = require('postcss-preset-env'),
+  postcssPxToViewport = require('postcss-px-to-viewport'),
   through = require('through2'),
   marked = require('marked'),
   conf = require('./conf');
@@ -92,14 +96,33 @@ exports.appendSrcExclusion = function (src) {
 
 exports.babel = function (file) {
   return new Promise(function (resolve, reject) {
-    const babelStream = babel({sourceType: 'script'});
-    babelStream.pipe(
+    const stream = babel({sourceType: 'script'});
+    stream.pipe(
       through.obj(function (file, enc, next) {
         resolve(file);
       })
     );
-    babelStream.on('error', reject);
-    babelStream.end(file);
+    stream.on('error', reject);
+    stream.end(file);
+  });
+};
+
+exports.postcss = function (file) {
+  return new Promise(function (resolve, reject) {
+    const stream = postcss([
+      postcssImport(),
+      postcssPresetEnv(),
+      postcssPxToViewport({
+        viewportWidth: 750
+      })
+    ]);
+    stream.pipe(
+      through.obj(function (file, enc, next) {
+        resolve(file);
+      })
+    );
+    stream.on('error', reject);
+    stream.end(file);
   });
 };
 
