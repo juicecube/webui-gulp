@@ -40,7 +40,7 @@ gulp.task('bundle:ts', function () {
             }),
             rollupCommonjs(),
             rollupTypescript(),
-            rollupMt2amd({babel: util.babel})
+            rollupMt2amd({babel: util.babel, strictMode: true})
           ]
         }).then(function (bundle) {
           return bundle.write({

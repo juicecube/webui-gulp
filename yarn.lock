@@ -3743,10 +3743,10 @@ gulp-html-i18n@^0.15.0:
     vinyl "^2.1.0"
     yamljs "^0.2.8"
 
-gulp-html-optimizer@^1.50.0:
-  version "1.50.0"
-  resolved "https://registry.yarnpkg.com/gulp-html-optimizer/-/gulp-html-optimizer-1.50.0.tgz#9f760e9968ffab67a44030b865ddb419d357de98"
-  integrity sha512-EXKs6TO+hlJuQik5BORT/3HR+tvWqbQOq6dEYYjwNSQCQT46Ai2Ifb/12oSyXXfY2cNKLH5UtmJYNpfR3UjmRg==
+gulp-html-optimizer@^1.51.0:
+  version "1.51.0"
+  resolved "https://registry.yarnpkg.com/gulp-html-optimizer/-/gulp-html-optimizer-1.51.0.tgz#d576821b7610ce79194079207f0fcad1202f3a30"
+  integrity sha512-zg8JMeJxAOs1Gq7ZfCyQBYm0ie5FlFyfgZXvTzXgZpFvNUKkUeMt1N6yz+7i/rUpFyP/FfVEt6LQGGXO98SkxQ==
   dependencies:
     clean-css "^3.4.24"
     gulp-amd-bundler "^1.29.0"
@@ -7950,10 +7950,10 @@ rollup-plugin-commonjs@^10.1.0:
     resolve "^1.11.0"
     rollup-pluginutils "^2.8.1"
 
-rollup-plugin-mt2amd@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-mt2amd/-/rollup-plugin-mt2amd-2.0.0.tgz#857a046425a41623214391a9ef68196567b6e7b8"
-  integrity sha512-jv+ezZbRt57kCCksMDwZ7qKNsrdxNeEM7LRNym/SeZg+q0OdEswtYhI8A7KkZcU1uZqcyTcFhK0u4+PgKmWGtg==
+rollup-plugin-mt2amd@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-mt2amd/-/rollup-plugin-mt2amd-2.1.0.tgz#e0ad6d201c0df0d07e5bc8dd8bef3029616dede9"
+  integrity sha512-cal3gXCHR4qRu0dnOyK/b2Mi8/XHVbENVelzIhLG0A9q9DLu8JhgamTi1GE8AaE8FNpacDLwbOQLLeJYWZy3Sg==
   dependencies:
     babel-runtime "^6.23.0"
     gulp-mt2amd "^1.15.0"
