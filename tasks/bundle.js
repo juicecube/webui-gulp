@@ -46,7 +46,7 @@ gulp.task('bundle:ts', function () {
           return bundle.write({
             file: outPath,
             format: 'iife',
-            name: 'boot',
+            name: 'App',
             sourcemap: true
           });
         }).then(function () {
