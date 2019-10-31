@@ -56,7 +56,7 @@ gulp.task('bundle:ts', function () {
     );
 });
 
-gulp.task('bundle:html:init', ['mt', 'sass', 'less'], function () {
+gulp.task('bundle:html:init', ['mt', 'sass', 'less', 'bundle:ts'], function () {
   return gulp
     .src(
       util.appendSrcExclusion([
@@ -74,7 +74,6 @@ gulp.task('bundle:html:init', ['mt', 'sass', 'less'], function () {
         minifyCSS: doMinify,
         enableCache: !isWatching(),
         optimizeRequire: false,
-        babel: util.babel,
         postcss: util.postcss
       })
     )
@@ -97,7 +96,6 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
         minifyCSS: doMinify,
         strictModeTemplate: true,
         isRelativeDependency: util.isRelativeDependency,
-        babel: util.babel,
         postcss: util.postcss
       })
     )

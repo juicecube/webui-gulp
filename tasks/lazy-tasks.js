@@ -75,7 +75,7 @@ exports.lazyInitHtmlTask = function () {
         optimizeRequire: 'ifAlways',
         cacheExtend: false,
         strictModeTemplate: true,
-        babel: util.babel
+        postcss: util.postcss
       }
     )
     .pipe(exports.lazyHtmlI18nTask(runId))
