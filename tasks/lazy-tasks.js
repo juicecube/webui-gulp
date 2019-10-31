@@ -75,7 +75,12 @@ exports.lazyInitHtmlTask = function () {
         optimizeRequire: 'ifAlways',
         cacheExtend: false,
         strictModeTemplate: true,
-        postcss: util.postcss
+        postcss: util.postcss,
+        envify: {
+          env: {
+            NODE_ENV: conf.ENV
+          }
+        }
       }
     )
     .pipe(exports.lazyHtmlI18nTask(runId))

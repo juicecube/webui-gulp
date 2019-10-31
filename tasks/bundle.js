@@ -15,6 +15,8 @@ const fs = require('fs'),
   rollupNodeResolve = require('rollup-plugin-node-resolve'),
   rollupCommonjs = require('rollup-plugin-commonjs'),
   rollupMt2amd = require('rollup-plugin-mt2amd'),
+  rollupReplace = require('rollup-plugin-replace'),
+  envify = require('process-envify'),
   htmlI18n = require('gulp-html-i18n'),
   htmlOptimizer = require('gulp-html-optimizer'),
   propertyMerge = require('gulp-property-merge');
@@ -40,6 +42,11 @@ gulp.task('bundle:ts', function () {
             }),
             rollupCommonjs(),
             rollupTypescript(),
+            rollupReplace({
+              ...envify({
+                NODE_ENV: conf.ENV
+              })
+            }),
             rollupMt2amd({babel: util.babel, strictMode: true})
           ]
         }).then(function (bundle) {
@@ -68,13 +75,26 @@ gulp.task('bundle:html:init', ['mt', 'sass', 'less', 'bundle:ts'], function () {
       {base: 'src'}
     )
     .pipe(
+      propertyMerge({
+        properties: Object.assign(
+          {},
+          conf
+        )
+      })
+    )
+    .pipe(
       htmlOptimizer({
         baseDir: 'dist',
         minifyJS: doMinify,
         minifyCSS: doMinify,
         enableCache: !isWatching(),
         optimizeRequire: false,
-        postcss: util.postcss
+        postcss: util.postcss,
+        envify: {
+          env: {
+            NODE_ENV: conf.ENV
+          }
+        }
       })
     )
     .pipe(gulp.dest('dist'));
@@ -96,7 +116,12 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
         minifyCSS: doMinify,
         strictModeTemplate: true,
         isRelativeDependency: util.isRelativeDependency,
-        postcss: util.postcss
+        postcss: util.postcss,
+        envify: {
+          env: {
+            NODE_ENV: conf.ENV
+          }
+        }
       })
     )
     .pipe(
