@@ -53,7 +53,7 @@ gulp.task('bundle:ts', function () {
           return bundle.write({
             file: outPath,
             format: 'iife',
-            name: 'App',
+            name: 'app',
             sourcemap: true
           });
         }).then(function () {
