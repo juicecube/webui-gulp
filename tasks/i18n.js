@@ -6,9 +6,9 @@ const gulp = require('../').gulp(),
 
 // validate consistence between each lang version
 gulp.task('i18n:validate', function () {
-  return gulp.src(['src/locale/**/*.json']).pipe(
+  return gulp.src(['src/locales/**/*.json']).pipe(
     htmlI18n.validateJsonConsistence({
-      langDir: 'src/locale'
+      langDir: 'src/locales'
     })
   );
 });
@@ -17,7 +17,7 @@ gulp.task('i18n:validate', function () {
 // caution!!! this will overwrite the source file in src folder!!!
 gulp.task('i18n:sort', ['i18n:validate'], function () {
   return gulp
-    .src(['src/locale/**/*.json'])
+    .src(['src/locales/**/*.json'])
     .pipe(
       htmlI18n.jsonSortKey({
         endWithNewline: true,
@@ -26,5 +26,5 @@ gulp.task('i18n:sort', ['i18n:validate'], function () {
         }
       })
     )
-    .pipe(gulp.dest('src/locale'));
+    .pipe(gulp.dest('src/locales'));
 });

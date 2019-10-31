@@ -80,7 +80,7 @@ gulp.task('watch', function () {
     }
   );
 
-  gulp.watch('src/locale/**/*.json', function (evt) {
+  gulp.watch('src/locales/**/*.json', function (evt) {
     const filePath = evt.path;
     log(chalk.cyan('[changed]'), filePath);
     return gulp.start('i18n:resolve-reference');

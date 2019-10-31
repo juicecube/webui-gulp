@@ -50,7 +50,7 @@ exports.lazyHtmlI18nTask = function (runId) {
     {
       runId: runId,
       createLangDirs: true,
-      langDir: 'src/locale',
+      langDir: 'src/locales',
       defaultLang: conf.defaultLang
     }
   );
