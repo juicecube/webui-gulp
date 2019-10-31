@@ -50,7 +50,7 @@ gulp.task('watch', function () {
   gulp.watch(
     [
       'src/**/*.layout.html',
-      'src/**/*.inc.+(html|js|css)',
+      'src/**/*.inc.+(html|js|ts|css|less|scss)',
       'src/**/*.tpl.html'
     ],
     function (evt) {
