@@ -15,7 +15,13 @@ function fixUrl(fileName, relPath, basePath) {
 
 gulp.task('versioning:asset', function () {
   return gulp
-    .src(util.appendSrcExclusion(['dist/**/*.css', 'dist/**/*.js']))
+    .src(
+      [
+        'dist/**/*.css',
+        'dist/**/*.js',
+        '!**/_vendor/**/*'
+      ]
+    )
     .pipe(
       digestVersioning({
         digestLength: conf.VERSION_DIGEST_LEN,

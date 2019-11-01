@@ -30,28 +30,8 @@ gulp.task('watch', function () {
   });
 
   gulp.watch(
-    util.appendSrcExclusion([
-      'src/**/*.html',
-      '!src/**/*.layout.html',
-      '!src/**/*.inc.html',
-      '!src/**/*.tpl.html'
-    ]),
-    function (evt) {
-      const filePath = evt.path;
-      const part = (path.dirname(filePath) + '/').split('/src/').pop();
-      log(chalk.cyan('[changed]'), filePath);
-      return gulp
-        .src(filePath)
-        .pipe(lazyTasks.lazyInitHtmlTask()())
-        .pipe(gulp.dest('dist/' + part));
-    }
-  );
-
-  gulp.watch(
     [
-      'src/**/*.layout.html',
-      'src/**/*.inc.+(html|js|ts|css|less|scss)',
-      'src/**/*.tpl.html'
+      'src/**/*'
     ],
     function (evt) {
       const filePath = evt.path;
@@ -59,30 +39,4 @@ gulp.task('watch', function () {
       return gulp.start(['bundle']);
     }
   );
-
-  gulp.watch(
-    [
-      'src/**/*.ts'
-    ],
-    function (evt) {
-      const filePath = evt.path;
-      log(chalk.cyan('[changed]'), filePath);
-      return gulp.start('bundle:ts');
-    }
-  );
-
-  gulp.watch(
-    util.appendSrcExclusion(['src/**/*.scss', 'src/**/*.less']),
-    function (evt) {
-      const filePath = evt.path;
-      log(chalk.cyan('[changed]'), filePath);
-      return gulp.start('bundle:html');
-    }
-  );
-
-  gulp.watch('src/locales/**/*.json', function (evt) {
-    const filePath = evt.path;
-    log(chalk.cyan('[changed]'), filePath);
-    return gulp.start('i18n:resolve-reference');
-  });
 });

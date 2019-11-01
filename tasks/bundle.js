@@ -29,7 +29,7 @@ gulp.task('bundle', ['bundle:html', 'bundle:ts']);
 
 gulp.task('bundle:ts', function () {
   return gulp
-    .src(['src/**/main.ts'])
+    .src([util.getWorkingDir('src') + '/**/main.ts'], {base: 'src'})
     .pipe(
       through.obj(function (file, enc, next) {
         const outPath = path.join('dist', path.relative(file.base, file.path).replace(/\.ts$/, '.js'));
@@ -66,12 +66,12 @@ gulp.task('bundle:ts', function () {
 gulp.task('bundle:html:init', ['mt', 'sass', 'less', 'bundle:ts'], function () {
   return gulp
     .src(
-      util.appendSrcExclusion([
-        'src/**/*.html',
-        '!src/**/*.layout.html',
-        '!src/**/*.inc.html',
-        '!src/**/*.tpl.html'
-      ]),
+      [
+        util.getWorkingDir('src') + '/**/*.html',
+        '!**/*.layout.html',
+        '!**/*.inc.html',
+        '!**/*.tpl.html'
+      ],
       {base: 'src'}
     )
     .pipe(
@@ -103,10 +103,13 @@ gulp.task('bundle:html:init', ['mt', 'sass', 'less', 'bundle:ts'], function () {
 // optimize html
 gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
   return gulp
-    .src([
-      'dist/**/*.html',
-      '!dist/zh-CN/**/*.html'
-    ])
+    .src(
+      [
+        util.getWorkingDir('dist') + '/**/*.html',
+        '!dist/zh-CN/**/*.html'
+      ],
+      {base: 'dist'}
+    )
     .pipe(lazyTasks.lazyHtmlI18nTask()())
     .pipe(htmlI18n.restorePath())
     .pipe(
@@ -150,7 +153,7 @@ gulp.task(
   ['bundle:html:optimize'],
   function () {
     return gulp
-      .src(['dist/**/*.html'])
+      .src([util.getWorkingDir('dist') + '/**/*.html'], {base: 'dist'})
       .pipe(
         propertyMerge({
           properties: Object.assign(

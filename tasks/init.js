@@ -16,45 +16,6 @@ gulp.task('revision', function (done) {
   done();
 });
 
-// eslint js
-gulp.task('eslint', function () {
-  let errorCount = 0;
-  let stream = gulp
-    .src(
-      util.appendSrcExclusion(['src/**/*.+(js|jsx|ts|tsx)']),
-      {base: 'src'}
-    )
-    .pipe(
-      conf.ESLINT_FIX
-        ? lazyTasks.eslintTask()
-        : cache('eslint', 'src', lazyTasks.eslintTask, {writeCache: false})
-    )
-    .pipe(
-      through.obj(function (file, enc, next) {
-        if (file.eslint) {
-          errorCount += file.eslint.errorCount;
-        }
-        this.push(file);
-        next();
-      })
-    )
-    .on('finish', function () {
-      if (errorCount) {
-        throw new PluginError('gulp-eslint', {
-          name: 'ESLintError',
-          message:
-            'Failed with '
-            + errorCount
-            + (errorCount === 1 ? ' error' : ' errors')
-        });
-      }
-    });
-  if (conf.ESLINT_FIX) {
-    stream = stream.pipe(gulp.dest('src'));
-  }
-  return stream;
-});
-
 // compile less
 gulp.task('less', ['less:main']);
 
@@ -62,10 +23,10 @@ gulp.task('less', ['less:main']);
 gulp.task('less:main', function (done) {
   return gulp
     .src(
-      util.appendSrcExclusion([
+      [
         'src/**/*-main.less',
         'src/**/main.less'
-      ])
+      ]
     )
     .pipe(less())
     .on('error', function (err) {
@@ -85,10 +46,10 @@ gulp.task('sass', ['sass:main']);
 gulp.task('sass:main', function (done) {
   return gulp
     .src(
-      util.appendSrcExclusion([
+      [
         'src/**/*-main.scss',
         'src/**/main.scss'
-      ])
+      ]
     )
     .pipe(sass())
     .on('error', function (err) {

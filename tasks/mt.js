@@ -7,7 +7,7 @@ const gulp = require('../').gulp(),
 gulp.task('mt:tpl', function () {
   return gulp
     .src(
-      util.appendSrcExclusion(['src/**/*.tpl.html'])
+      ['src/**/*.tpl.html']
     )
     .pipe(
       cache('mt', 'src', function () {

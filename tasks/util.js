@@ -24,16 +24,8 @@ function execGitCmd(args) {
     .split('\n');
 }
 
-exports.getRevision = function () {
-  try {
-    const revision = fs
-      .readFileSync('dist/revision')
-      .toString()
-      .trim();
-    return revision;
-  } catch (err) {
-    return '';
-  }
+exports.getWorkingDir = function (src) {
+  return src.replace(/\/+$/, '') + (conf.WORKING_DIR ? '/' + conf.WORKING_DIR : '');
 };
 
 exports.getDigest = function (content) {
@@ -54,10 +46,6 @@ exports.isRelativeDependency = function (dep, isRelative, reqFilePath) {
   }
 };
 
-exports.cssModuleClassNameGenerator = function (css) {
-  return '_' + exports.getDigest(css);
-};
-
 exports.getChangedFiles = function () {
   return execGitCmd(['diff', '--name-only', '--diff-filter=ACMRTUB', 'HEAD'])
     .concat(execGitCmd(['ls-files', '--others', '--exclude-standard']))
@@ -71,27 +59,6 @@ exports.safeRequireJson = function (path) {
     return null;
   }
   return JSON.parse(stripJsonComments(fs.readFileSync(path).toString()));
-};
-
-exports.getExcutablePath = function (name) {
-  let executable = path.resolve(__dirname, '../node_modules/.bin/' + name);
-  if (!fs.existsSync(executable)) {
-    executable = './node_modules/.bin/' + name;
-  }
-  return executable;
-};
-
-exports.appendSrcExclusion = function (src) {
-  if (!Array.isArray(src)) {
-    src = [src];
-  }
-  const exclusion = ['!dist/**/_vendor/**/*'];
-  if (src[0].split('/')[0] != 'dist') {
-    exclusion.push(
-      '!src/**/_vendor/**/*'
-    );
-  }
-  return src.concat(exclusion);
 };
 
 exports.babel = function (file) {

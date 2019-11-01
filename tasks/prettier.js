@@ -36,14 +36,15 @@ function prettier({logFile} = {}) {
 gulp.task('prettier', function () {
   return gulp
     .src(
-      util.appendSrcExclusion(
-        util.getChangedFiles().filter(function (item) {
+      [
+        ...util.getChangedFiles().filter(function (item) {
           return (
             item.indexOf('src/' === 0)
             && (/\.(js|jsx|ts|tsx)$/i).test(item)
           );
-        })
-      ),
+        }),
+        '!**/_vendor/**/*'
+      ],
       {base: 'src'}
     )
     .pipe(prettier({logFile: true}))
@@ -53,7 +54,10 @@ gulp.task('prettier', function () {
 gulp.task('prettier-all', function () {
   return gulp
     .src(
-      util.appendSrcExclusion(['src/**/*.+(js|jsx|ts|tsx)'])
+      [
+        'src/**/*.+(js|jsx|ts|tsx)',
+        '!**/_vendor/**/*'
+      ]
     )
     .pipe(
       cache('prettier-all', 'src', prettier, {
