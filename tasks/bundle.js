@@ -85,7 +85,11 @@ gulp.task('bundle:html:init', ['mt', 'sass', 'less', 'bundle:ts'], function () {
     .pipe(
       htmlOptimizer({
         baseDir: 'dist',
-        minifyJS: doMinify,
+        minifyJS: doMinify && {
+          output: {
+            comments: /^remove_all_comments/
+          }
+        },
         minifyCSS: doMinify,
         enableCache: !isWatching(),
         optimizeRequire: false,
@@ -115,7 +119,11 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
     .pipe(
       htmlOptimizer({
         baseDir: 'dist',
-        minifyJS: doMinify,
+        minifyJS: doMinify && {
+          output: {
+            comments: /^remove_all_comments/
+          }
+        },
         minifyCSS: doMinify,
         strictModeTemplate: true,
         isRelativeDependency: util.isRelativeDependency,

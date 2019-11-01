@@ -32,6 +32,9 @@ gulp.task('minify', function () {
                 getUrl: function (sourcePath) {
                   return path.basename(sourcePath) + '.map';
                 }
+              },
+              output: {
+                comments: /^remove_all_comments/
               }
             },
             minifyCSS: {
