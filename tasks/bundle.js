@@ -32,6 +32,7 @@ gulp.task('bundle:ts', function () {
     .src([util.getWorkingDir('src') + '/**/main.ts'], {base: path.resolve('src')})
     .pipe(
       through.obj(function (file, enc, next) {
+        const prefix = path.dirname(file.path).split(/\/scripts(\/|$)/).pop().replace(/(\/|-)+/g, '_');
         const outPath = path.join('dist', path.relative(file.base, file.path).replace(/\.ts$/, '.js'));
         rollup.rollup({
           input: file.path,
@@ -53,7 +54,7 @@ gulp.task('bundle:ts', function () {
           return bundle.write({
             file: outPath,
             format: 'iife',
-            name: 'app',
+            name: 'G.' + (prefix ? prefix + '_main' : 'main'),
             sourcemap: true
           });
         }).then(function () {
