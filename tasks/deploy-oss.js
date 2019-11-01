@@ -36,7 +36,7 @@ function deployOss(opt, done) {
     failList = [];
     let count = 0;
     gulp
-      .src(src, {base: 'dist'})
+      .src(src, {base: path.resolve('dist')})
       .pipe(
         through.obj(function (file, enc, next) {
           if (!file.isBuffer()) {

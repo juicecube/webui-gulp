@@ -10,17 +10,7 @@ const exec = require('child_process').exec,
   util = require('./util'),
   lazyTasks = require('./lazy-tasks');
 
-// revision
-gulp.task('revision', function (done) {
-  exec('mkdir -p dist && git rev-parse --short HEAD > dist/revision');
-  done();
-});
-
-// compile less
-gulp.task('less', ['less:main']);
-
-// compile main less
-gulp.task('less:main', function (done) {
+gulp.task('less', function (done) {
   return gulp
     .src(
       [
@@ -39,11 +29,7 @@ gulp.task('less:main', function (done) {
     .pipe(gulp.dest('dist'));
 });
 
-// compile sass
-gulp.task('sass', ['sass:main']);
-
-// compile main sass
-gulp.task('sass:main', function (done) {
+gulp.task('sass', function (done) {
   return gulp
     .src(
       [
@@ -62,7 +48,6 @@ gulp.task('sass:main', function (done) {
     .pipe(gulp.dest('dist'));
 });
 
-// move img
 gulp.task('img', function () {
   return gulp
     .src(

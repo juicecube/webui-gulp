@@ -15,7 +15,7 @@ gulp.task('minify', function () {
         'dist/**/*.+(js|css|html)',
         '!dist/**/*.min.+(js|css)'
       ],
-      {base: 'dist'}
+      {base: path.resolve('dist')}
     )
     .pipe(
       gulpif(

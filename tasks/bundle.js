@@ -29,7 +29,7 @@ gulp.task('bundle', ['bundle:html', 'bundle:ts']);
 
 gulp.task('bundle:ts', function () {
   return gulp
-    .src([util.getWorkingDir('src') + '/**/main.ts'], {base: 'src'})
+    .src([util.getWorkingDir('src') + '/**/main.ts'], {base: path.resolve('src')})
     .pipe(
       through.obj(function (file, enc, next) {
         const outPath = path.join('dist', path.relative(file.base, file.path).replace(/\.ts$/, '.js'));
@@ -72,7 +72,7 @@ gulp.task('bundle:html:init', ['mt', 'sass', 'less', 'bundle:ts'], function () {
         '!**/*.inc.html',
         '!**/*.tpl.html'
       ],
-      {base: 'src'}
+      {base: path.resolve('src')}
     )
     .pipe(
       propertyMerge({
@@ -108,7 +108,7 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
         util.getWorkingDir('dist') + '/**/*.html',
         '!dist/zh-CN/**/*.html'
       ],
-      {base: 'dist'}
+      {base: path.resolve('dist')}
     )
     .pipe(lazyTasks.lazyHtmlI18nTask()())
     .pipe(htmlI18n.restorePath())
@@ -129,8 +129,8 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
     )
     .pipe(
       useref({
-        searchPath: process.cwd() + '/dist',
-        base: process.cwd() + '/dist',
+        searchPath: path.resolve('dist'),
+        base: path.resolve('dist'),
         types: ['js', 'css', 'asyncloadcss'],
         injectcss: userefCostomBlocks.injectcss,
         asyncloadcss: userefCostomBlocks.asyncloadcss
@@ -153,7 +153,7 @@ gulp.task(
   ['bundle:html:optimize'],
   function () {
     return gulp
-      .src([util.getWorkingDir('dist') + '/**/*.html'], {base: 'dist'})
+      .src([util.getWorkingDir('dist') + '/**/*.html'], {base: path.resolve('dist')})
       .pipe(
         propertyMerge({
           properties: Object.assign(

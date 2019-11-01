@@ -45,7 +45,7 @@ gulp.task('prettier', function () {
         }),
         '!**/_vendor/**/*'
       ],
-      {base: 'src'}
+      {base: path.resolve('src')}
     )
     .pipe(prettier({logFile: true}))
     .pipe(gulp.dest('src'));
