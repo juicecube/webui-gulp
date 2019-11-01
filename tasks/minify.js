@@ -7,7 +7,7 @@ const path = require('path'),
 
 // minify js, css, html
 gulp.task('minify', function () {
-  const doMinify = conf.IS_PRODUCTION && !process.env.NO_MINIFY;
+  const doMinify = conf.IS_PROD && !process.env.NO_MINIFY;
 
   return gulp
     .src(

@@ -53,7 +53,7 @@ conf.ESLINT_FIX = process.env.ESLINT_FIX == '1';
 conf.APP_VERSION = require(path.resolve('package.json')).version || '';
 conf.ENV = ENV;
 conf.VERSION_DIGEST_LEN = 7;
-conf.IS_PRODUCTION = ENV == 'prd';
+conf.IS_PROD = ENV == 'prod';
 
 let ossAccessKey = null;
 conf.getOssAccessKey = function () {

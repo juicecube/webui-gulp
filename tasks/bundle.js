@@ -22,7 +22,7 @@ const fs = require('fs'),
   propertyMerge = require('gulp-property-merge');
 
 const md5map = {};
-const doMinify = conf.IS_PRODUCTION && !process.env.NO_MINIFY;
+const doMinify = conf.IS_PROD && !process.env.NO_MINIFY;
 
 // bundle
 gulp.task('bundle', ['bundle:html', 'bundle:ts']);
