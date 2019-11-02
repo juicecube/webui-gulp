@@ -54,7 +54,7 @@ gulp.task('bundle:ts', function () {
           return bundle.write({
             file: outPath,
             format: 'iife',
-            name: 'G.' + (prefix ? prefix + '_main' : 'main'),
+            name: prefix ? prefix + '_main' : 'main',
             sourcemap: true
           });
         }).then(function () {
