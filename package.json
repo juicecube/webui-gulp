@@ -1,7 +1,6 @@
 {
   "name": "@mlz/webui-gulp",
   "version": "0.1.0",
-  "private": true,
   "description": "webui-gulp",
   "scripts": {},
   "dependencies": {
