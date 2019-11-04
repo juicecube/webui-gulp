@@ -12,15 +12,15 @@ gulp.task('minify', function () {
   return gulp
     .src(
       [
-        'dist/**/*.+(js|css|html)',
-        '!dist/**/*.min.+(js|css)'
+        'build/**/*.+(js|css|html)',
+        '!build/**/*.min.+(js|css)'
       ],
-      {base: path.resolve('dist')}
+      {base: path.resolve('build')}
     )
     .pipe(
       gulpif(
         doMinify,
-        cache('minify', 'dist', function () {
+        cache('minify', 'build', function () {
           return minify({
             minify: doMinify,
             minifyHTML: {
@@ -45,5 +45,5 @@ gulp.task('minify', function () {
         })
       )
     )
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('build'));
 });

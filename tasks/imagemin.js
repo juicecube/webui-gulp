@@ -13,8 +13,8 @@ gulp.task('imagemin:webp', function (done) {
   }
   gulp
     .src([
-      'dist/**/*.+(jpg|jpeg|png)',
-      '!dist/**/_vendor/**/*'
+      'build/**/*.+(jpg|jpeg|png)',
+      '!build/**/_vendor/**/*'
     ])
     .pipe(
       through.obj(function (file, enc, next) {
@@ -38,7 +38,7 @@ gulp.task('imagemin:webp', function (done) {
           });
       })
     )
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest('build'))
     .on('finish', function () {
       done();
     });
@@ -47,9 +47,9 @@ gulp.task('imagemin:webp', function (done) {
 gulp.task('imagemin:png', ['imagemin:webp'], function () {
   return gulp
     .src([
-      'dist/**/*.png',
-      '!dist/**/*.min.png',
-      '!dist/**/_vendor/**/*'
+      'build/**/*.png',
+      '!build/**/*.min.png',
+      '!build/**/_vendor/**/*'
     ])
     .pipe(
       through.obj(function (file, enc, next) {
@@ -72,15 +72,15 @@ gulp.task('imagemin:png', ['imagemin:webp'], function () {
           });
       })
     )
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('build'));
 });
 
 gulp.task('imagemin:jpg', ['imagemin:webp'], function () {
   return gulp
     .src([
-      'dist/**/*.+(jpg|jpeg)',
-      '!dist/**/*.min.+(jpg|jpeg)',
-      '!dist/**/_vendor/**/*'
+      'build/**/*.+(jpg|jpeg)',
+      '!build/**/*.min.+(jpg|jpeg)',
+      '!build/**/_vendor/**/*'
     ])
     .pipe(
       through.obj(function (file, enc, next) {
@@ -103,7 +103,7 @@ gulp.task('imagemin:jpg', ['imagemin:webp'], function () {
           });
       })
     )
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('build'));
 });
 
 gulp.task('imagemin', ['imagemin:png', 'imagemin:jpg', 'imagemin:webp']);

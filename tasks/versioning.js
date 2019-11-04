@@ -17,36 +17,36 @@ gulp.task('versioning:asset', function () {
   return gulp
     .src(
       [
-        'dist/**/*.css',
-        'dist/**/*.js',
+        'build/**/*.css',
+        'build/**/*.js',
         '!**/_vendor/**/*'
       ]
     )
     .pipe(
       digestVersioning({
         digestLength: conf.VERSION_DIGEST_LEN,
-        basePath: 'dist',
-        destPath: 'dist',
+        basePath: 'build',
+        destPath: 'build',
         appendToFileName: true,
         fixUrl: fixUrl
       })
     )
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('build'));
 });
 
 gulp.task('versioning:html', function () {
   return gulp
-    .src(['dist/**/*.html'])
+    .src(['build/**/*.html'])
     .pipe(
       digestVersioning({
         digestLength: conf.VERSION_DIGEST_LEN,
-        basePath: 'dist',
-        destPath: 'dist',
+        basePath: 'build',
+        destPath: 'build',
         appendToFileName: true,
         fixUrl: fixUrl
       })
     )
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('build'));
 });
 
 gulp.task('versioning:clean', function (done) {

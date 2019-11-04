@@ -53,7 +53,7 @@ exports.asyncloadcss = function (content, target, attrs, alternateSearchPath) {
 
 exports.injectcss = function (content, target, attrs, alternateSearchPath) {
   let res = [];
-  let base = process.cwd() + '/dist';
+  let base = process.cwd() + '/build';
   let hrefs = _extractAttrValue(content, 'href');
   if (hrefs && !Array.isArray(hrefs)) {
     hrefs = [hrefs];

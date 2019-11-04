@@ -3,7 +3,7 @@ const gulp = require('../').gulp(),
   del = require('del');
 
 gulp.task('clean', function () {
-  return del(['dist/']);
+  return del(['build/']);
 });
 
 gulp.task('clean-cache', function () {
@@ -11,5 +11,5 @@ gulp.task('clean-cache', function () {
 });
 
 gulp.task('clean-bundle', function () {
-  return del(['dist/**/__tests__/', 'dist/**/*.tpl.html.js', 'dist/**/*.tpl.html.js.map']);
+  return del(['build/**/__tests__/', 'build/**/*.tpl.html.js', 'build/**/*.tpl.html.js.map']);
 });

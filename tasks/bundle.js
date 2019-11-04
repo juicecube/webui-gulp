@@ -33,7 +33,7 @@ gulp.task('bundle:ts', function () {
     .pipe(
       through.obj(function (file, enc, next) {
         const prefix = path.dirname(file.path).split(/\/scripts(\/|$)/).pop().replace(/(\/|-)+/g, '_');
-        const outPath = path.join('dist', path.relative(file.base, file.path).replace(/\.ts$/, '.js'));
+        const outPath = path.join('build', path.relative(file.base, file.path).replace(/\.ts$/, '.js'));
         rollup.rollup({
           input: file.path,
           plugins: [
@@ -85,7 +85,7 @@ gulp.task('bundle:html:init', ['mt', 'sass', 'less', 'bundle:ts'], function () {
     )
     .pipe(
       htmlOptimizer({
-        baseDir: 'dist',
+        baseDir: 'build',
         minifyJS: doMinify && {
           output: {
             comments: /^remove_all_comments/
@@ -102,7 +102,7 @@ gulp.task('bundle:html:init', ['mt', 'sass', 'less', 'bundle:ts'], function () {
         }
       })
     )
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('build'));
 });
 
 // optimize html
@@ -110,16 +110,16 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
   return gulp
     .src(
       [
-        util.getWorkingDir('dist') + '/**/*.html',
-        '!dist/zh-CN/**/*.html'
+        util.getWorkingDir('build') + '/**/*.html',
+        '!build/zh-CN/**/*.html'
       ],
-      {base: path.resolve('dist')}
+      {base: path.resolve('build')}
     )
     .pipe(lazyTasks.lazyHtmlI18nTask()())
     .pipe(htmlI18n.restorePath())
     .pipe(
       htmlOptimizer({
-        baseDir: 'dist',
+        baseDir: 'build',
         minifyJS: doMinify && {
           output: {
             comments: /^remove_all_comments/
@@ -138,8 +138,8 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
     )
     .pipe(
       useref({
-        searchPath: path.resolve('dist'),
-        base: path.resolve('dist'),
+        searchPath: path.resolve('build'),
+        base: path.resolve('build'),
         types: ['js', 'css', 'asyncloadcss'],
         injectcss: userefCostomBlocks.injectcss,
         asyncloadcss: userefCostomBlocks.asyncloadcss
@@ -147,13 +147,13 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
     )
     .pipe(
       through.obj(function (file, enc, next) {
-        file.base = file.base.split(/\/dist(\/|$)/)[0] + '/dist';
+        file.base = file.base.split(/\/build(\/|$)/)[0] + '/build';
         this.push(file);
         next();
       })
     )
     .pipe(htmlI18n.i18nPath())
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('build'));
 });
 
 // bundle html
@@ -162,7 +162,7 @@ gulp.task(
   ['bundle:html:optimize'],
   function () {
     return gulp
-      .src([util.getWorkingDir('dist') + '/**/*.html'], {base: path.resolve('dist')})
+      .src([util.getWorkingDir('build') + '/**/*.html'], {base: path.resolve('build')})
       .pipe(
         propertyMerge({
           properties: Object.assign(
@@ -171,6 +171,6 @@ gulp.task(
           )
         })
       )
-      .pipe(gulp.dest('dist'));
+      .pipe(gulp.dest('build'));
   }
 );

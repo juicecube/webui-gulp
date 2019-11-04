@@ -18,7 +18,7 @@ gulp.task('mt:tpl', function () {
         });
       })
     )
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('build'));
 });
 
 // mt

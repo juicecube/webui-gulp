@@ -7,5 +7,5 @@ gulp.task('vendor', function (done) {
       'src/**/_vendor/**/**',
       '!src/**/*.+(less|scss)'
     ])
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('build'));
 });
