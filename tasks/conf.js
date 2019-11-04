@@ -18,8 +18,9 @@ try {
   config = {};
 }
 
-const ENV = config.envs && config.envs[process.env.NODE_ENV]
-  ? process.env.NODE_ENV
+const GIVEN_ENV = process.env.front_env || process.env.NODE_ENV;
+const ENV = config.envs && config.envs[GIVEN_ENV]
+  ? GIVEN_ENV
   : 'local';
 
 const conf = (function () {
@@ -53,7 +54,6 @@ conf.ESLINT_FIX = process.env.ESLINT_FIX == '1';
 conf.APP_VERSION = require(path.resolve('package.json')).version || '';
 conf.ENV = ENV;
 conf.VERSION_DIGEST_LEN = 7;
-conf.IS_PROD = ENV == 'production';
 
 log(
   'Running env '
