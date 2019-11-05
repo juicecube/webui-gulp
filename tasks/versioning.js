@@ -10,7 +10,7 @@ function fixUrl(fileName, relPath, basePath) {
     const filePath = path.resolve(path.dirname(relPath), fileName);
     fileName = path.relative(basePath, filePath);
   }
-  return conf.cdnBase.replace(/\/$/, '') + '/' + fileName.replace(/^\//, '');
+  return conf.runtime.cdnBase.replace(/\/$/, '') + '/' + fileName.replace(/^\//, '');
 }
 
 gulp.task('versioning:asset', function () {

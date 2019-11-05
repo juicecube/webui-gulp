@@ -148,7 +148,7 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
     .pipe(
       through.obj(function (file, enc, next) {
         const content = file.contents.toString()
-          .replace(/\{\s*__CODEMAO_RUNTIME_CONFIG_INJECT__\s*:\s*1\s*\}/, JSON.stringify(conf.RUNTIME_CONFIG));
+          .replace(/\{\s*__CODEMAO_RUNTIME_CONFIG_INJECT__\s*:\s*1\s*\}/, JSON.stringify(conf.runtime));
         file.contents = Buffer.from(content);
         file.base = file.base.split(/\/build(\/|$)/)[0] + '/build';
         this.push(file);

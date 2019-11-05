@@ -11,42 +11,27 @@ if (fs.realpathSync(path.join(process.cwd(), 'node_modules/@mlz/webui-gulp/tasks
   process.exit(1);
 }
 
+const ENV = process.env.front_env || process.env.NODE_ENV || 'local';
+
+let defaultConf;
 let config;
 try {
-  config = require(path.resolve('./config'));
+  defaultConf = require(path.resolve('./config/default.json'));
+  config = require(path.resolve(`./config/${ENV}.json`));
 } catch (e) {
-  config = {};
+  if (!defaultConf) {
+    throw new Error('Can not resolve default config file!');
+  }
+  if (!config) {
+    throw new Error(`Can not resolve config file for env "${ENV}"!`);
+  }
 }
 
-const GIVEN_ENV = process.env.front_env || process.env.NODE_ENV;
-const ENV = config.envs && config.envs[GIVEN_ENV]
-  ? GIVEN_ENV
-  : 'local';
-
-const conf = (function () {
-  const defaultConf = {};
-  const runtimeConf = config.envs && config.envs[ENV] || {};
-  const conf = _.omit(
-    Object.assign(
-      {
-        RUNTIME_CONFIG: runtimeConf
-      },
-      defaultConf,
-      config,
-      runtimeConf
-    ),
-    ['envs']
-  );
-
-  // overwrite config from command line
-  for (const p in conf) {
-    if (process.env[p]) {
-      conf[p] = process.env[p];
-    }
-  }
-
-  return conf;
-})();
+const conf = Object.assign(
+  {},
+  defaultConf,
+  config
+);
 
 conf.BUILD_TIME = new Date().toISOString();
 conf.CACHE_DIR_NAME = '.build-cache';
