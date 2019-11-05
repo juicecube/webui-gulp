@@ -25,12 +25,15 @@ const ENV = config.envs && config.envs[GIVEN_ENV]
 
 const conf = (function () {
   const defaultConf = {};
+  const runtimeConf = config.envs && config.envs[ENV] || {};
   const conf = _.omit(
     Object.assign(
-      {},
+      {
+        RUNTIME_CONFIG: runtimeConf
+      },
       defaultConf,
       config,
-      config.envs && config.envs[ENV]
+      runtimeConf
     ),
     ['envs']
   );
