@@ -17,7 +17,6 @@ const fs = require('fs'),
   rollupMt2amd = require('rollup-plugin-mt2amd'),
   rollupReplace = require('rollup-plugin-replace'),
   envify = require('process-envify'),
-  mt2amd = require('gulp-mt2amd'),
   htmlI18n = require('gulp-html-i18n'),
   htmlOptimizer = require('gulp-html-optimizer'),
   propertyMerge = require('gulp-property-merge');
@@ -25,7 +24,6 @@ const fs = require('fs'),
 const md5map = {};
 const doMinify = (conf.ENV === 'production' || conf.ENV === 'staging') && !process.env.NO_MINIFY;
 
-// bundle
 gulp.task('bundle', ['bundle:html', 'bundle:ts']);
 
 gulp.task('bundle:ts', function () {
@@ -169,24 +167,7 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('bundle:html:tpl', ['bundle:html:optimize'], function () {
-  return gulp
-    .src(
-      [
-        util.getWorkingDir('build') + '/**/*.html'
-      ],
-      {base: path.resolve('build')}
-    )
-    .pipe(mt2amd({
-      strictMode: true,
-      commonjs: true,
-      babel: util.babel
-    }))
-    .pipe(gulp.dest('www/build'));
-});
-
-// bundle html
 gulp.task(
   'bundle:html',
-  ['bundle:html:init', 'bundle:html:optimize', 'bundle:html:tpl']
+  ['bundle:html:init', 'bundle:html:optimize']
 );
