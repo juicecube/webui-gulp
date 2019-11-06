@@ -1,7 +1,6 @@
 /* global process */
 
-const _ = require('underscore'),
-  fs = require('fs'),
+const fs = require('fs'),
   path = require('path'),
   log = require('fancy-log'),
   chalk = require('chalk');

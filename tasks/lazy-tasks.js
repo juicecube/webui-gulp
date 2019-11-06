@@ -18,7 +18,6 @@ const path = require('path'),
   postcssPxToViewport = require('postcss-px-to-viewport'),
   through = require('through2'),
   htmlI18n = require('gulp-html-i18n'),
-  rename = require('gulp-rename'),
   htmlOptimizer = require('gulp-html-optimizer'),
   propertyMerge = require('gulp-property-merge');
 

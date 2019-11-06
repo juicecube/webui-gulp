@@ -14,10 +14,8 @@ gulp.task('clean-bundle', function () {
   const src = [
     'build/**/__tests__/',
     'build/**/*.tpl.html.js',
-    'build/**/*.html.js.map'
+    'build/**/*.html.js.map',
+    'build/**/*.html'
   ];
-  if (conf.ENV !== 'local') {
-    src.push('build/**/*.html');
-  }
   return del(src);
 });

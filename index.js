@@ -1,5 +1,6 @@
 let gulp = require('gulp');
 const requireAll = require('require-all');
+const conf = require('./tasks/conf');
 
 const webuiGulp = {
   gulp: function (useGulp) {
@@ -18,6 +19,10 @@ const webuiGulp = {
     });
     webuiGulp.loadTasks = function () {};
     return webuiGulp;
+  },
+
+  getConfig: function () {
+    return conf;
   }
 };
 

@@ -9,7 +9,6 @@ const fs = require('fs'),
   postcssPresetEnv = require('postcss-preset-env'),
   postcssPxToViewport = require('postcss-px-to-viewport'),
   through = require('through2'),
-  marked = require('marked'),
   conf = require('./conf');
 
 function execGitCmd(args) {
@@ -90,18 +89,5 @@ exports.postcss = function (file) {
     );
     stream.on('error', reject);
     stream.end(file);
-  });
-};
-
-exports.markedStream = function ({minify = false} = {}) {
-  return through.obj(function (file, enc, next) {
-    let contents = marked(file.contents.toString());
-    if (minify) {
-      contents = contents.replace(/\n/g, '').replace(/ +/g, ' ');
-    }
-    file.contents = Buffer.from(contents);
-    file.path = file.path.replace(/\.md$/i, '.html');
-    this.push(file);
-    next();
   });
 };
