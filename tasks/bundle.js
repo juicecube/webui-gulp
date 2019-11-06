@@ -5,7 +5,6 @@ const fs = require('fs'),
   gulp = require('../').gulp(),
   conf = require('./conf'),
   util = require('./util'),
-  isWatching = require('./watch').isWatching,
   gulpif = require('gulp-if'),
   through = require('through2'),
   useref = require('gulp-useref'),
@@ -94,7 +93,7 @@ gulp.task('bundle:html:init', ['mt', 'sass', 'less', 'bundle:ts'], function () {
           }
         },
         minifyCSS: doMinify,
-        enableCache: !isWatching(),
+        enableCache: false,
         optimizeRequire: false,
         postcss: util.postcss,
         envify: {
