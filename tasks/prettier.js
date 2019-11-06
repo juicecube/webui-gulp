@@ -33,22 +33,28 @@ function prettier({logFile} = {}) {
   });
 }
 
-gulp.task('prettier', function () {
-  return gulp
+gulp.task('prettier', function (done) {
+  const changedFiles = util.getChangedFiles().filter(function (item) {
+    return (
+      item.indexOf('src/' === 0)
+      && (/\.(js|jsx|ts|tsx)$/i).test(item)
+    );
+  });
+  if (!changedFiles.length) {
+    done();
+    return;
+  }
+  gulp
     .src(
       [
-        ...util.getChangedFiles().filter(function (item) {
-          return (
-            item.indexOf('src/' === 0)
-            && (/\.(js|jsx|ts|tsx)$/i).test(item)
-          );
-        }),
+        ...changedFiles,
         '!**/_vendor/**/*'
       ],
       {base: path.resolve('src')}
     )
     .pipe(prettier({logFile: true}))
-    .pipe(gulp.dest('src'));
+    .pipe(gulp.dest('src'))
+    .on('finish', done);
 });
 
 gulp.task('prettier-all', function () {

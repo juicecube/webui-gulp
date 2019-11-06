@@ -3,7 +3,7 @@ const gulp = require('../').gulp(),
   del = require('del');
 
 gulp.task('clean', function () {
-  return del(['build/']);
+  return del(['build/', 'www/build/']);
 });
 
 gulp.task('clean-cache', function () {
@@ -11,5 +11,13 @@ gulp.task('clean-cache', function () {
 });
 
 gulp.task('clean-bundle', function () {
-  return del(['build/**/__tests__/', 'build/**/*.tpl.html.js', 'build/**/*.tpl.html.js.map']);
+  const src = [
+    'build/**/__tests__/',
+    'build/**/*.tpl.html.js',
+    'build/**/*.html.js.map'
+  ];
+  if (conf.ENV !== 'local') {
+    src.push('build/**/*.html');
+  }
+  return del(src);
 });

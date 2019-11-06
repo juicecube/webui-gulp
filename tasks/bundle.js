@@ -6,6 +6,7 @@ const fs = require('fs'),
   conf = require('./conf'),
   util = require('./util'),
   isWatching = require('./watch').isWatching,
+  gulpif = require('gulp-if'),
   through = require('through2'),
   useref = require('gulp-useref'),
   userefCostomBlocks = require('./useref-custom-blocks'),
@@ -17,6 +18,7 @@ const fs = require('fs'),
   rollupMt2amd = require('rollup-plugin-mt2amd'),
   rollupReplace = require('rollup-plugin-replace'),
   envify = require('process-envify'),
+  mt2amd = require('gulp-mt2amd'),
   htmlI18n = require('gulp-html-i18n'),
   htmlOptimizer = require('gulp-html-optimizer'),
   propertyMerge = require('gulp-property-merge');
@@ -105,7 +107,6 @@ gulp.task('bundle:html:init', ['mt', 'sass', 'less', 'bundle:ts'], function () {
     .pipe(gulp.dest('build'));
 });
 
-// optimize html
 gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
   return gulp
     .src(
@@ -146,34 +147,47 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
       })
     )
     .pipe(
-      through.obj(function (file, enc, next) {
-        const content = file.contents.toString()
-          .replace(/\{\s*__CODEMAO_RUNTIME_CONFIG_INJECT__\s*:\s*1\s*\}/, JSON.stringify(conf.runtime));
-        file.contents = Buffer.from(content);
-        file.base = file.base.split(/\/build(\/|$)/)[0] + '/build';
-        this.push(file);
-        next();
+      gulpif(conf.ENV === 'local',
+        through.obj(function (file, enc, next) {
+          const content = file.contents.toString()
+            .replace(/\{\s*__CODEMAO_RUNTIME_CONFIG_INJECT__\s*:\s*1\s*\}/, JSON.stringify(conf.runtime));
+          file.contents = Buffer.from(content);
+          file.base = file.base.split(/\/build(\/|$)/)[0] + '/build';
+          this.push(file);
+          next();
+        })
+      )
+    )
+    .pipe(
+      propertyMerge({
+        properties: Object.assign(
+          {},
+          conf
+        )
       })
     )
     .pipe(htmlI18n.i18nPath())
     .pipe(gulp.dest('build'));
 });
 
+gulp.task('bundle:html:tpl', ['bundle:html:optimize'], function () {
+  return gulp
+    .src(
+      [
+        util.getWorkingDir('build') + '/**/*.html'
+      ],
+      {base: path.resolve('build')}
+    )
+    .pipe(mt2amd({
+      strictMode: true,
+      commonjs: true,
+      babel: util.babel
+    }))
+    .pipe(gulp.dest('www/build'));
+});
+
 // bundle html
 gulp.task(
   'bundle:html',
-  ['bundle:html:optimize'],
-  function () {
-    return gulp
-      .src([util.getWorkingDir('build') + '/**/*.html'], {base: path.resolve('build')})
-      .pipe(
-        propertyMerge({
-          properties: Object.assign(
-            {},
-            conf
-          )
-        })
-      )
-      .pipe(gulp.dest('build'));
-  }
+  ['bundle:html:init', 'bundle:html:optimize', 'bundle:html:tpl']
 );
