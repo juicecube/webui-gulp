@@ -13,8 +13,6 @@ gulp.task('clean-cache', function () {
 gulp.task('clean-bundle', function () {
   const src = [
     'build/**/__tests__/',
-    'build/**/*.tpl.html.js',
-    'build/**/*.html.js.map',
     'build/**/*.html'
   ];
   return del(src);
