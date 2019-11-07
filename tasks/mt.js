@@ -14,6 +14,7 @@ gulp.task('mt:tpl', function () {
         return mt2amd({
           strictMode: true,
           commonjs: true,
+          dataInjection: 'G.SERVER_INJECTED_DATA',
           babel: util.babel
         });
       })
