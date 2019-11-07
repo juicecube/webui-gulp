@@ -10,7 +10,7 @@ if (fs.realpathSync(path.join(process.cwd(), 'node_modules/@mlz/webui-gulp/tasks
   process.exit(1);
 }
 
-const ENV = process.env.front_env || process.env.NODE_ENV || 'local';
+const ENV = process.env.NODE_ENV || 'local';
 
 let defaultConf;
 let config;
