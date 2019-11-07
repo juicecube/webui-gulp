@@ -113,8 +113,8 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
       ],
       {base: path.resolve('build')}
     )
-    .pipe(lazyTasks.lazyHtmlI18nTask()())
-    .pipe(htmlI18n.restorePath())
+    .pipe(gulpif(!!conf.defaultLang, lazyTasks.lazyHtmlI18nTask()()))
+    .pipe(gulpif(!!conf.defaultLang, htmlI18n.restorePath()))
     .pipe(
       htmlOptimizer({
         baseDir: 'build',
@@ -163,7 +163,7 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
         )
       })
     )
-    .pipe(htmlI18n.i18nPath())
+    .pipe(gulpif(!!conf.defaultLang, htmlI18n.i18nPath()))
     .pipe(gulp.dest('build'));
 });
 
