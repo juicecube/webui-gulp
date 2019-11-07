@@ -3,8 +3,8 @@ const gulp = require('../').gulp(),
   through = require('through2'),
   imagemin = require('imagemin'),
   imageminWebp = require('imagemin-webp'),
-  imageminPngquant = require('imagemin-pngquant'),
-  imageminMozjpeg = require('imagemin-mozjpeg'),
+  imageminOptipng = require('@mlz/imagemin-optipng'),
+  imageminMozjpeg = require('@mlz/imagemin-mozjpeg'),
   conf = require('./conf');
 
 gulp.task('imagemin:webp', function (done) {
@@ -56,8 +56,8 @@ gulp.task('imagemin:png', ['imagemin:webp'], function () {
         imagemin
           .buffer(file.contents, {
             plugins: [
-              imageminPngquant({
-                quality: [0.65, 0.8]
+              imageminOptipng({
+                optimizationLevel: 4
               })
             ]
           })
