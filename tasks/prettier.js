@@ -62,16 +62,18 @@ gulp.task('prettier-all', function () {
     .src(
       [
         'src/**/*.+(js|jsx|ts|tsx)',
+        'www/src/**/*.+(js|jsx|ts|tsx)',
         '!**/_vendor/**/*'
-      ]
+      ],
+      {base: './'}
     )
     .pipe(
-      cache('prettier-all', 'src', prettier, {
+      cache('prettier-all', './', prettier, {
         cacheBase: path.resolve(conf.CACHE_DIR_NAME, 'prettier'),
         targetExtName: 0
       })
     )
-    .pipe(gulp.dest('src'));
+    .pipe(gulp.dest('./'));
 });
 
 exports.prettier = prettier;
