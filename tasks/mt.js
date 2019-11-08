@@ -3,8 +3,7 @@ const gulp = require('../').gulp(),
   cache = require('./cache'),
   util = require('./util');
 
-// compile micro template
-gulp.task('mt:tpl', function () {
+gulp.task('mt', function () {
   return gulp
     .src(
       ['src/**/*.tpl.html']
@@ -20,6 +19,3 @@ gulp.task('mt:tpl', function () {
     )
     .pipe(gulp.dest('www/build/tpl'));
 });
-
-// mt
-gulp.task('mt', ['mt:tpl']);
