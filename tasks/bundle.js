@@ -41,7 +41,7 @@ gulp.task('bundle:ts', function () {
             }),
             rollupCommonjs({
               namedExports: {
-                'fingerprintjs2': ['get']
+                'fingerprintjs2': ['get', 'x64hash128']
               }
             }),
             rollupTypescript(),
