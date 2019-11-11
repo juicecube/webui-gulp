@@ -123,6 +123,15 @@
   resolved "https://registry.npm.taobao.org/@csstools/convert-colors/download/@csstools/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha1-rUldxBsS511YjG24uYNPCPoTHrc=
 
+"@mlz/cwebp-bin@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.npm.taobao.org/@mlz/cwebp-bin/download/@mlz/cwebp-bin-5.1.0.tgz#337c3ff13ba6f5f5e5544f6f72f4dd36fb56f1d4"
+  integrity sha1-M3w/8Tum9fXlVE9vcvTdNvtW8dQ=
+  dependencies:
+    bin-build "^3.0.0"
+    bin-wrapper "^4.0.1"
+    logalot "^2.1.0"
+
 "@mlz/imagemin-mozjpeg@^8.0.1":
   version "8.0.1"
   resolved "https://registry.npm.taobao.org/@mlz/imagemin-mozjpeg/download/@mlz/imagemin-mozjpeg-8.0.1.tgz?cache=0&sync_timestamp=1573108545701&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40mlz%2Fimagemin-mozjpeg%2Fdownload%2F%40mlz%2Fimagemin-mozjpeg-8.0.1.tgz#a14e0498865910f6825ba25111fb8425a1efaaaf"
@@ -140,6 +149,15 @@
     "@mlz/optipng-bin" "^6.0.3"
     exec-buffer "^3.0.0"
     is-png "^2.0.0"
+
+"@mlz/imagemin-webp@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.npm.taobao.org/@mlz/imagemin-webp/download/@mlz/imagemin-webp-5.1.0.tgz#9a07373c9becac7806d92c19558ec4cb16550117"
+  integrity sha1-mgc3PJvsrHgG2SwZVY7EyxZVARc=
+  dependencies:
+    "@mlz/cwebp-bin" "^5.1.0"
+    exec-buffer "^3.0.0"
+    is-cwebp-readable "^3.0.0"
 
 "@mlz/mozjpeg@^6.0.2":
   version "6.0.2"
@@ -1597,15 +1615,6 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-cwebp-bin@^5.0.0:
-  version "5.1.0"
-  resolved "https://registry.npm.taobao.org/cwebp-bin/download/cwebp-bin-5.1.0.tgz#d5bea87c127358558e7bf7a90a6d440d42dcb074"
-  integrity sha1-1b6ofBJzWFWOe/epCm1EDULcsHQ=
-  dependencies:
-    bin-build "^3.0.0"
-    bin-wrapper "^4.0.1"
-    logalot "^2.1.0"
-
 cwise-compiler@^1.0.0, cwise-compiler@^1.1.2:
   version "1.1.3"
   resolved "https://registry.npm.taobao.org/cwise-compiler/download/cwise-compiler-1.1.3.tgz#f4d667410e850d3a313a7d2db7b1e505bb034cc5"
@@ -2447,6 +2456,11 @@ file-type@5.2.0, file-type@^5.2.0:
   resolved "https://registry.npm.taobao.org/file-type/download/file-type-5.2.0.tgz#2ddbea7c73ffe36368dfae49dc338c058c2b8ad6"
   integrity sha1-LdvqfHP/42No365J3DOMBYwritY=
 
+file-type@^10.5.0:
+  version "10.11.0"
+  resolved "https://registry.npm.taobao.org/file-type/download/file-type-10.11.0.tgz#2961d09e4675b9fb9a3ee6b69e9cd23f43fd1890"
+  integrity sha1-KWHQnkZ1ufuaPua2npzSP0P9GJA=
+
 file-type@^12.0.0:
   version "12.4.0"
   resolved "https://registry.npm.taobao.org/file-type/download/file-type-12.4.0.tgz#a9a399459e1940d9f34b3973039958f1f36a565e"
@@ -2457,7 +2471,7 @@ file-type@^3.8.0:
   resolved "https://registry.npm.taobao.org/file-type/download/file-type-3.9.0.tgz#257a078384d1db8087bc449d107d52a52672b9e9"
   integrity sha1-JXoHg4TR24CHvESdEH1SpSZyuek=
 
-file-type@^4.2.0, file-type@^4.3.0:
+file-type@^4.2.0:
   version "4.4.0"
   resolved "https://registry.npm.taobao.org/file-type/download/file-type-4.4.0.tgz#1b600e5fca1fbdc6e80c0a70c71c8dba5f7906c5"
   integrity sha1-G2AOX8ofvcboDApwxxyNul95BsU=
@@ -3568,15 +3582,6 @@ image-size@~0.5.0:
   resolved "https://registry.npm.taobao.org/image-size/download/image-size-0.5.5.tgz?cache=0&sync_timestamp=1569840695898&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fimage-size%2Fdownload%2Fimage-size-0.5.5.tgz#09dfd4ab9d20e29eb1c3e80b8990378df9e3cb9c"
   integrity sha1-Cd/Uq50g4p6xw+gLiZA3jfnjy5w=
 
-imagemin-webp@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.npm.taobao.org/imagemin-webp/download/imagemin-webp-5.1.0.tgz#ddb1307ad97aff97293c5a600e384e40c07f68a7"
-  integrity sha1-3bEwetl6/5cpPFpgDjhOQMB/aKc=
-  dependencies:
-    cwebp-bin "^5.0.0"
-    exec-buffer "^3.0.0"
-    is-cwebp-readable "^2.0.1"
-
 imagemin@^7.0.0:
   version "7.0.0"
   resolved "https://registry.npm.taobao.org/imagemin/download/imagemin-7.0.0.tgz#48651ab86c1975157306e3a18f8994814db085ff"
@@ -3789,12 +3794,12 @@ is-callable@^1.1.4:
   resolved "https://registry.npm.taobao.org/is-callable/download/is-callable-1.1.4.tgz#1e1adf219e1eeb684d691f9d6a05ff0d30a24d75"
   integrity sha1-HhrfIZ4e62hNaR+dagX/DTCiTXU=
 
-is-cwebp-readable@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npm.taobao.org/is-cwebp-readable/download/is-cwebp-readable-2.0.1.tgz#afb93b0c0abd0a25101016ae33aea8aedf926d26"
-  integrity sha1-r7k7DAq9CiUQEBauM66ort+SbSY=
+is-cwebp-readable@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/is-cwebp-readable/download/is-cwebp-readable-3.0.0.tgz#0554aaa400977a2fc4de366d8c0244f13cde58cb"
+  integrity sha1-BVSqpACXei/E3jZtjAJE8TzeWMs=
   dependencies:
-    file-type "^4.3.0"
+    file-type "^10.5.0"
 
 is-data-descriptor@^0.1.4:
   version "0.1.4"
