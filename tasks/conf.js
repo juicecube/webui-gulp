@@ -36,8 +36,6 @@ conf.BUILD_TIME = new Date().toISOString();
 conf.CACHE_DIR_NAME = '.build-cache';
 conf.WORKING_DIR = (process.env.WORKING_DIR || '').replace(/^\/+|\/+$/, '');
 conf.USE_CACHE = process.env.BUILD_CACHE != '0';
-conf.USE_HTTPS = process.env.USE_HTTPS == '1';
-conf.ESLINT_FIX = process.env.ESLINT_FIX == '1';
 conf.APP_VERSION = require(path.resolve('package.json')).version || '';
 conf.ENV = ENV;
 conf.VERSION_DIGEST_LEN = 7;
