@@ -21,7 +21,6 @@ const fs = require('fs'),
   htmlOptimizer = require('gulp-html-optimizer'),
   propertyMerge = require('gulp-property-merge');
 
-const md5map = {};
 const doMinify = (conf.ENV === 'production' || conf.ENV === 'staging') && !process.env.NO_MINIFY;
 
 gulp.task('bundle', ['bundle:html', 'bundle:ts']);
@@ -40,7 +39,11 @@ gulp.task('bundle:ts', function () {
               mainFields: ['module', 'browser', 'main'],
               preferBuiltins: false
             }),
-            rollupCommonjs(),
+            rollupCommonjs({
+              namedExports: {
+                'fingerprintjs2': ['get']
+              }
+            }),
             rollupTypescript(),
             rollupReplace({
               ...envify({
