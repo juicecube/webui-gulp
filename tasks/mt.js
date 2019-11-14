@@ -1,4 +1,5 @@
-const gulp = require('../').gulp(),
+const path = require('path'),
+  gulp = require('../').gulp(),
   mt2amd = require('gulp-mt2amd'),
   cache = require('./cache'),
   util = require('./util');
@@ -6,7 +7,11 @@ const gulp = require('../').gulp(),
 gulp.task('mt', function () {
   return gulp
     .src(
-      ['src/**/*.tpl.html']
+      [
+        'src/common/**/*.tpl.html',
+        util.getWorkingDir('src') + '/**/*.tpl.html'
+      ],
+      {base: path.resolve('src')}
     )
     .pipe(
       cache('mt', 'src', function () {

@@ -27,7 +27,13 @@ gulp.task('bundle', ['bundle:html', 'bundle:ts']);
 
 gulp.task('bundle:ts', function () {
   return gulp
-    .src([util.getWorkingDir('src') + '/**/main.ts'], {base: path.resolve('src')})
+    .src(
+      [
+        'src/common/**/main.ts',
+        util.getWorkingDir('src') + '/**/main.ts'
+      ],
+      {base: path.resolve('src')}
+    )
     .pipe(
       through.obj(function (file, enc, next) {
         const prefix = path.dirname(file.path).split(/\/scripts(\/|$)/).pop().replace(/(?:\/|-)(.)/g, function ($0, $1) {
