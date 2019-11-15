@@ -52,7 +52,9 @@ gulp.task('bundle:ts', function () {
                 'fingerprintjs2': ['get', 'x64hash128']
               }
             }),
-            rollupTypescript(),
+            rollupTypescript({
+              check: conf.ENV !== 'local' || process.env.ROLLUP_TYPESCRIPT_CHECK === '1'
+            }),
             rollupReplace({
               ...envify({
                 NODE_ENV: conf.ENV
@@ -69,6 +71,8 @@ gulp.task('bundle:ts', function () {
           });
         }).then(function () {
           next();
+        }).catch(function (err) {
+          next(err);
         });
       })
     );
