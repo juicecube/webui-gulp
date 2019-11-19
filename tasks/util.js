@@ -62,7 +62,7 @@ exports.safeRequireJson = function (path) {
 
 exports.babel = function (file) {
   return new Promise(function (resolve, reject) {
-    const stream = babel({sourceType: 'script'});
+    const stream = babel();
     stream.pipe(
       through.obj(function (file, enc, next) {
         resolve(file);
