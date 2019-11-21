@@ -47,11 +47,13 @@ gulp.task('sass', function (done) {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('img', function () {
+gulp.task('copy', function () {
   return gulp
     .src(
       [
-        'src/**/*.+(jpg|jpeg|gif|png|otf|eot|svg|ttf|woff|woff2|ico|mp3|swf)'
+        'src/**/*.+(jpg|jpeg|gif|png|otf|eot|svg|ttf|woff|woff2|ico|mp3|swf)',
+        'src/**/_vendor/**/**',
+        '!src/**/*.+(less|scss)'
       ]
     )
     .pipe(gulp.dest('build'));
