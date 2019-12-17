@@ -34,7 +34,7 @@ gulp.task('minify', function () {
                 }
               },
               output: {
-                comments: /^remove_all_comments/
+                comments: false
               }
             },
             minifyCSS: {

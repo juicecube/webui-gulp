@@ -100,9 +100,15 @@ gulp.task('bundle:html:init', ['mt', 'sass', 'less', 'bundle:ts'], function () {
     .pipe(
       htmlOptimizer({
         baseDir: 'build',
-        minifyJS: doMinify && {
+        minifyJS: doMinify ? {
           output: {
-            comments: /^remove_all_comments/
+            comments: false
+          }
+        } : {
+          compress: false,
+          mangle: false,
+          output: {
+            comments: false
           }
         },
         minifyCSS: doMinify,
@@ -133,9 +139,15 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function () {
     .pipe(
       htmlOptimizer({
         baseDir: 'build',
-        minifyJS: doMinify && {
+        minifyJS: doMinify ? {
           output: {
-            comments: /^remove_all_comments/
+            comments: false
+          }
+        } : {
+          compress: false,
+          mangle: false,
+          output: {
+            comments: false
           }
         },
         minifyCSS: doMinify,
