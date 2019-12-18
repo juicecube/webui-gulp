@@ -75,13 +75,15 @@ exports.babel = function (file) {
 
 exports.postcss = function (file) {
   return new Promise(function (resolve, reject) {
-    const stream = postcss([
-      postcssImport(),
-      postcssPresetEnv(),
-      postcssPxToViewport({
-        viewportWidth: conf.viewportWidth || 750
-      })
-    ]);
+    const stream = postcss(
+      [
+        postcssImport(),
+        postcssPresetEnv(),
+        conf.viewportWidth ? postcssPxToViewport({
+          viewportWidth: conf.viewportWidth
+        }) : null
+      ].filter(item => item !== null)
+    );
     stream.pipe(
       through.obj(function (file, enc, next) {
         resolve(file);

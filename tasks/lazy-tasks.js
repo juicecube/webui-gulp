@@ -11,10 +11,10 @@ exports.lazyPostcssTask = lazypipe().pipe(
   [
     postcssImport(),
     postcssPresetEnv(),
-    postcssPxToViewport({
-      viewportWidth: conf.viewportWidth || 750
-    })
-  ]
+    conf.viewportWidth ? postcssPxToViewport({
+      viewportWidth: conf.viewportWidth
+    }) : null
+  ].filter(item => item !== null)
 );
 
 exports.lazyHtmlI18nTask = function (runId) {
