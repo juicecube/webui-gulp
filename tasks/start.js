@@ -1,7 +1,7 @@
 const spawn = require('child_process').spawn,
   gulp = require('../').gulp(),
   conf = require('./conf'),
-  runSequence = require('run-sequence');
+  runSequence = require('run-sequence').use(gulp);
 
 gulp.task('start', function (done) {
   runSequence('clean:build', 'copy', 'bundle', 'server:ts', 'server:tpl', 'clean:bundle', function (err) {

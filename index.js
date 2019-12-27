@@ -3,12 +3,15 @@ const requireAll = require('require-all');
 const conf = require('./tasks/conf');
 
 const webuiGulp = {
-  gulp: function (useGulp) {
+  gulp: function () {
+    return gulp;
+  },
+
+  use: function (useGulp) {
     if (useGulp) {
       gulp = useGulp;
-      return webuiGulp;
     }
-    return gulp;
+    return webuiGulp;
   },
 
   loadTasks: function () {

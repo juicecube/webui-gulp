@@ -11,11 +11,11 @@ const fs = require('fs'),
   userefCostomBlocks = require('./useref-custom-blocks'),
   lazyTasks = require('./lazy-tasks'),
   rollup = require('rollup'),
-  rollupTypescript = require('rollup-plugin-typescript2'),
-  rollupNodeResolve = require('rollup-plugin-node-resolve'),
-  rollupCommonjs = require('rollup-plugin-commonjs'),
+  rollupTypescript = require('@rollup/plugin-typescript'),
+  rollupNodeResolve = require('@rollup/plugin-node-resolve'),
+  rollupCommonjs = require('@rollup/plugin-commonjs'),
+  rollupReplace = require('@rollup/plugin-replace'),
   rollupMt2amd = require('rollup-plugin-mt2amd'),
-  rollupReplace = require('rollup-plugin-replace'),
   envify = require('process-envify'),
   htmlI18n = require('gulp-html-i18n'),
   htmlOptimizer = require('gulp-html-optimizer'),
@@ -52,9 +52,7 @@ gulp.task('bundle:ts', function () {
                 'fingerprintjs2': ['get', 'x64hash128']
               }
             }),
-            rollupTypescript({
-              check: conf.ENV !== 'local' || process.env.ROLLUP_TYPESCRIPT_CHECK === '1'
-            }),
+            rollupTypescript(),
             rollupReplace({
               ...envify({
                 NODE_ENV: conf.ENV
