@@ -11,6 +11,7 @@ const fs = require('fs'),
   userefCostomBlocks = require('./useref-custom-blocks'),
   lazyTasks = require('./lazy-tasks'),
   rollup = require('rollup'),
+  rollupAlias = require('@rollup/plugin-alias'),
   rollupTypescript = require('@rollup/plugin-typescript'),
   rollupNodeResolve = require('@rollup/plugin-node-resolve'),
   rollupCommonjs = require('@rollup/plugin-commonjs'),
@@ -51,6 +52,13 @@ gulp.task('bundle:ts', function () {
               namedExports: {
                 'fingerprintjs2': ['get', 'x64hash128']
               }
+            }),
+            rollupAlias({
+              entries: [
+                {find: 'react', replacement: 'preact/compat'},
+                {find: 'react-dom', replacement: 'preact/compat'},
+                {find: 'react-dom/test-utils', replacement: 'preact/test-utils'},
+              ]
             }),
             rollupTypescript(),
             rollupReplace({

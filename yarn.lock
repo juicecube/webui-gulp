@@ -198,6 +198,13 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
+"@rollup/plugin-alias@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/@rollup/plugin-alias/download/@rollup/plugin-alias-3.0.0.tgz#3ac4952d05d5a700b0d918b18f312db0aa2b006f"
+  integrity sha1-OsSVLQXVpwCw2RixjzEtsKorAG8=
+  dependencies:
+    slash "^3.0.0"
+
 "@rollup/plugin-commonjs@^11.0.0":
   version "11.0.0"
   resolved "https://registry.npm.taobao.org/@rollup/plugin-commonjs/download/@rollup/plugin-commonjs-11.0.0.tgz#a6675e56094ac9c797c19a3986378289396a9dd5"

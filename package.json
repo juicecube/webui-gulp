@@ -1,6 +1,6 @@
 {
   "name": "@mlz/webui-gulp",
-  "version": "0.33.0",
+  "version": "0.34.0",
   "description": "webui-gulp",
   "scripts": {},
   "dependencies": {
@@ -8,6 +8,7 @@
     "@mlz/imagemin-mozjpeg": "^8.0.1",
     "@mlz/imagemin-optipng": "^7.1.1",
     "@mlz/imagemin-webp": "^5.1.1",
+    "@rollup/plugin-alias": "^3.0.0",
     "@rollup/plugin-commonjs": "^11.0.0",
     "@rollup/plugin-node-resolve": "^6.0.0",
     "@rollup/plugin-replace": "^2.3.0",
