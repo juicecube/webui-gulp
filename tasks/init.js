@@ -58,3 +58,5 @@ gulp.task('copy', function () {
     )
     .pipe(gulp.dest('build'));
 });
+
+gulp.task('init', ['copy', 'less', 'sass', 'mt']);

@@ -38,7 +38,7 @@ conf.WORKING_DIR = (process.env.WORKING_DIR || '').replace(/^\/+|\/+$/, '');
 conf.USE_CACHE = process.env.BUILD_CACHE != '0';
 conf.APP_VERSION = require(path.resolve('package.json')).version || '';
 conf.ENV = ENV;
-conf.VERSION_DIGEST_LEN = 7;
+conf.VERSION_DIGEST_LEN = 8;
 
 log(
   'Running env '

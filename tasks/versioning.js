@@ -5,7 +5,17 @@ const fs = require('fs'),
   util = require('./util'),
   digestVersioning = require('gulp-digest-versioning');
 
+function skipFileName(fileName) {
+  if ((/chunk\.(\w{8})\.js$/).test(fileName)) {
+    return true;
+  }
+  return false;
+}
+
 function fixUrl(fileName, relPath, basePath) {
+  if ((/chunk\.(\w{8})\.js$/).test(fileName)) {
+    return fileName;
+  }
   if (!(/^\//).test(fileName)) {
     const filePath = path.resolve(path.dirname(relPath), fileName);
     fileName = path.relative(basePath, filePath);
@@ -28,6 +38,7 @@ gulp.task('versioning:asset', function () {
         basePath: 'build',
         destPath: 'build',
         appendToFileName: true,
+        skipFileName: skipFileName,
         fixUrl: fixUrl
       })
     )
@@ -43,6 +54,7 @@ gulp.task('versioning:html', function () {
         basePath: 'build',
         destPath: 'build',
         appendToFileName: true,
+        skipFileName: skipFileName,
         fixUrl: fixUrl
       })
     )

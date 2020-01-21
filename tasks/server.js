@@ -4,10 +4,10 @@ const path = require('path'),
   util = require('./util'),
   mt2amd = require('gulp-mt2amd');
 
-gulp.task('server:ts', function (done) {
+gulp.task('server:tsc', function (done) {
   const ps = spawn('npx', ['tsc', '--outDir', 'www/build', '--project', 'www/tsconfig.json', '--skipLibCheck'], {stdio: 'inherit'});
   ps.on('close', function (code) {
-    done(code === 0 ? null : new Error('server:ts failed'));
+    done(code === 0 ? null : new Error('server:tsc failed'));
   });
 });
 

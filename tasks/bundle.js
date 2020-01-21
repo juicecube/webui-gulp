@@ -24,9 +24,7 @@ const fs = require('fs'),
 
 const doMinify = (conf.ENV === 'production' || conf.ENV === 'staging') && !process.env.NO_MINIFY;
 
-gulp.task('bundle', ['bundle:html', 'bundle:ts']);
-
-gulp.task('bundle:ts', function () {
+gulp.task('bundle:asset:ts', function () {
   return gulp
     .src(
       [
@@ -40,9 +38,14 @@ gulp.task('bundle:ts', function () {
         const prefix = path.dirname(file.path).split(/\/scripts(\/|$)/).pop().replace(/(?:\/|-)(.)/g, function ($0, $1) {
           return $1.toUpperCase();
         });
-        const outPath = path.join('build', path.relative(file.base, file.path).replace(/\.ts$/, '.js'));
+        const outDir = path.dirname(path.join('build', path.relative(file.base, file.path)));
         rollup.rollup({
           input: file.path,
+          manualChunks: conf.bundleFormat === 'system' ? function (id) {
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+          } : undefined,
           plugins: [
             rollupNodeResolve({
               mainFields: ['module', 'browser', 'main'],
@@ -69,12 +72,21 @@ gulp.task('bundle:ts', function () {
             rollupMt2amd({babel: util.babel, strictMode: true})
           ]
         }).then(function (bundle) {
-          return bundle.write({
-            file: outPath,
-            format: 'iife',
-            name: prefix ? prefix + 'Main' : 'main',
-            sourcemap: true
-          });
+          if (conf.bundleFormat === 'system') {
+            return bundle.write({
+              dir: outDir,
+              format: 'system',
+              chunkFileNames: '[name]-chunk.[hash].js',
+              sourcemap: true
+            });
+          } else {
+            return bundle.write({
+              dir: outDir,
+              format: 'iife',
+              name: prefix ? prefix + 'Main' : 'main',
+              sourcemap: true
+            });
+          }
         }).then(function () {
           next();
         }).catch(function (err) {
@@ -84,7 +96,9 @@ gulp.task('bundle:ts', function () {
     );
 });
 
-gulp.task('bundle:html:init', ['mt', 'sass', 'less', 'bundle:ts'], function () {
+gulp.task('bundle:asset', ['bundle:asset:ts']);
+
+gulp.task('bundle:html:init', function () {
   return gulp
     .src(
       [

@@ -4,7 +4,7 @@ const spawn = require('child_process').spawn,
   runSequence = require('run-sequence').use(gulp);
 
 gulp.task('start', function (done) {
-  runSequence('clean:build', 'copy', 'bundle', 'server:ts', 'server:tpl', 'clean:bundle', function (err) {
+  runSequence('clean:build', 'init', 'bundle:asset', 'bundle:html', 'server:tsc', 'server:tpl', 'clean:bundle', function (err) {
     done(err);
     if (!err) {
       let server = spawn('node', [`--inspect=127.0.0.1:${conf.debugPort || 9229}`, 'www/build/app.js'], {stdio: 'inherit'});
@@ -24,7 +24,7 @@ gulp.task('start', function (done) {
       }
       gulp.watch(['src/**/*', 'types/**/*'], function (evt) {
           console.log('[changed] ' + evt.path);
-          runSequence('copy', 'bundle', 'server:tpl', 'clean:bundle', function (err) {
+          runSequence('init', 'bundle:asset', 'bundle:html', 'server:tpl', 'clean:bundle', function (err) {
             if (err) {
               console.log(err);
               return;
@@ -34,7 +34,7 @@ gulp.task('start', function (done) {
       });
       gulp.watch(['www/src/**/*', 'www/types/**/*'], function (evt) {
           console.log('[changed] ' + evt.path);
-          runSequence('server:ts', function (err) {
+          runSequence('server:tsc', function (err) {
             if (err) {
               console.log(err);
               return;
@@ -50,13 +50,14 @@ gulp.task('start', function (done) {
 gulp.task('build', function (done) {
   runSequence(
     'clean:build',
-    'copy',
+    'init',
     'imagemin',
-    'bundle',
+    'bundle:asset',
     'versioning:asset',
+    'bundle:html',
     'versioning:html',
     'versioning:clean',
-    'server:ts',
+    'server:tsc',
     'server:tpl',
     'minify',
     'clean:bundle',
