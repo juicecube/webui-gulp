@@ -17,6 +17,7 @@ const fs = require('fs'),
   rollupCommonjs = require('@rollup/plugin-commonjs'),
   rollupReplace = require('@rollup/plugin-replace'),
   rollupMt2amd = require('rollup-plugin-mt2amd'),
+  rollupVue = require('rollup-plugin-vue'),
   envify = require('process-envify'),
   htmlI18n = require('gulp-html-i18n'),
   htmlOptimizer = require('gulp-html-optimizer'),
@@ -69,7 +70,8 @@ gulp.task('bundle:asset:ts', function () {
                 NODE_ENV: conf.ENV
               })
             }),
-            rollupMt2amd({babel: util.babel, strictMode: true})
+            rollupMt2amd({babel: util.babel, strictMode: true}),
+            rollupVue()
           ]
         }).then(function (bundle) {
           if (conf.bundleFormat === 'system') {
