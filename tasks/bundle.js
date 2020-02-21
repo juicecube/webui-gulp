@@ -17,6 +17,7 @@ const fs = require('fs'),
   rollupCommonjs = require('@rollup/plugin-commonjs'),
   rollupReplace = require('@rollup/plugin-replace'),
   rollupMt2amd = require('rollup-plugin-mt2amd'),
+  rollupScss = require('rollup-plugin-scss'),
   rollupVue = require('rollup-plugin-vue'),
   envify = require('process-envify'),
   htmlI18n = require('gulp-html-i18n'),
@@ -71,6 +72,9 @@ gulp.task('bundle:asset:ts', function () {
               })
             }),
             rollupMt2amd({babel: util.babel, strictMode: true}),
+            rollupScss({
+              output: path.join(outDir, 'main.css')
+            }),
             rollupVue()
           ]
         }).then(function (bundle) {
