@@ -1,6 +1,6 @@
 {
   "name": "@mlz/webui-gulp",
-  "version": "0.38.0",
+  "version": "0.39.0",
   "description": "webui-gulp",
   "scripts": {},
   "dependencies": {
@@ -22,6 +22,7 @@
     "gulp-html-i18n": "^0.16.0",
     "gulp-html-optimizer": "^1.56.0",
     "gulp-if": "^2.0.0",
+    "gulp-img-css-sprite": "^0.5.0",
     "gulp-less": "^4.0.1",
     "gulp-lesshint": "^1.1.0",
     "gulp-minifier": "^3.4.0",
@@ -29,6 +30,7 @@
     "gulp-postcss": "^8.0.0",
     "gulp-property-merge": "^0.4.0",
     "gulp-sass": "^4.0.2",
+    "gulp-sus": "^0.5.0",
     "gulp-useref": "^3.0.4",
     "imagemin": "^7.0.0",
     "lazypipe": "^1.0.1",

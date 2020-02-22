@@ -1519,7 +1519,7 @@ css-selector-tokenizer@^0.7.0:
     fastparse "^1.1.1"
     regexpu-core "^1.0.0"
 
-css@^2.0.0, css@^2.2.0:
+css@^2.0.0, css@^2.2.0, css@^2.2.4:
   version "2.2.4"
   resolved "https://registry.npm.taobao.org/css/download/css-2.2.4.tgz#c646755c73971f2bba6a601e2cf2fd71b1298929"
   dependencies:
@@ -2820,6 +2820,18 @@ gulp-img-css-sprite@^0.2.0:
     through2 "^0.5.1"
     vinyl "^2.1.0"
 
+gulp-img-css-sprite@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.npm.taobao.org/gulp-img-css-sprite/download/gulp-img-css-sprite-0.5.0.tgz?cache=0&sync_timestamp=1582343500630&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fgulp-img-css-sprite%2Fdownload%2Fgulp-img-css-sprite-0.5.0.tgz#1a32b2cb6dcd438097f08164e9343a592032f25b"
+  dependencies:
+    async "^0.9.0"
+    css "^2.2.4"
+    plugin-error "^1.0.0"
+    q "^1.0.1"
+    spritesmith "^3.4.0"
+    through2 "^0.5.1"
+    vinyl "^2.1.0"
+
 gulp-less@^4.0.1:
   version "4.0.1"
   resolved "https://registry.npm.taobao.org/gulp-less/download/gulp-less-4.0.1.tgz#348c33a5dde7a207c5771b1d8261d1ac1021ceed"
@@ -2924,6 +2936,16 @@ gulp-sus@^0.2.0:
   dependencies:
     async "^0.9.0"
     css "^2.2.0"
+    plugin-error "^1.0.0"
+    q "^1.0.1"
+    through2 "^0.5.1"
+
+gulp-sus@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.npm.taobao.org/gulp-sus/download/gulp-sus-0.5.0.tgz#a36eafa38af48122b6796588081b37256e56d046"
+  dependencies:
+    async "^0.9.0"
+    css "^2.2.4"
     plugin-error "^1.0.0"
     q "^1.0.1"
     through2 "^0.5.1"
@@ -6179,7 +6201,7 @@ sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.npm.taobao.org/sprintf-js/download/sprintf-js-1.0.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsprintf-js%2Fdownload%2Fsprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
 
-spritesmith@^3.3.1:
+spritesmith@^3.3.1, spritesmith@^3.4.0:
   version "3.4.0"
   resolved "https://registry.npm.taobao.org/spritesmith/download/spritesmith-3.4.0.tgz#5cfa004278c9072ab4900a0cd800141c7cf296e2"
   dependencies:

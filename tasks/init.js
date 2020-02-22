@@ -6,8 +6,7 @@ const exec = require('child_process').exec,
   cache = require('./cache'),
   through = require('through2'),
   PluginError = require('plugin-error'),
-  util = require('./util'),
-  lazyTasks = require('./lazy-tasks');
+  util = require('./util');
 
 gulp.task('less', function (done) {
   return gulp
@@ -18,10 +17,6 @@ gulp.task('less', function (done) {
       ]
     )
     .pipe(less())
-    .on('error', function (err) {
-      done(err);
-    })
-    .pipe(lazyTasks.lazyPostcssTask())
     .on('error', function (err) {
       done(err);
     })
@@ -37,10 +32,6 @@ gulp.task('sass', function (done) {
       ]
     )
     .pipe(sass())
-    .on('error', function (err) {
-      done(err);
-    })
-    .pipe(lazyTasks.lazyPostcssTask())
     .on('error', function (err) {
       done(err);
     })
