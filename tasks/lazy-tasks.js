@@ -11,20 +11,19 @@ exports.lazyPostcssTask = lazypipe().pipe(
   [
     postcssImport(),
     postcssPresetEnv(),
-    conf.viewportWidth ? postcssPxToViewport({
-      viewportWidth: conf.viewportWidth
-    }) : null
-  ].filter(item => item !== null)
+    conf.viewportWidth
+      ? postcssPxToViewport({
+          viewportWidth: conf.viewportWidth,
+        })
+      : null,
+  ].filter(item => item !== null),
 );
 
-exports.lazyHtmlI18nTask = function (runId) {
-  return lazypipe().pipe(
-    htmlI18n,
-    {
-      runId: runId,
-      createLangDirs: true,
-      langDir: 'src/locales',
-      defaultLang: conf.defaultLang
-    }
-  );
+exports.lazyHtmlI18nTask = function(runId) {
+  return lazypipe().pipe(htmlI18n, {
+    runId: runId,
+    createLangDirs: true,
+    langDir: 'src/locales',
+    defaultLang: conf.defaultLang,
+  });
 };

@@ -7,24 +7,21 @@ const gulp = require('../').gulp(),
   imageminMozjpeg = require('@mlz/imagemin-mozjpeg'),
   conf = require('./conf');
 
-gulp.task('imagemin:webp', function (done) {
+gulp.task('imagemin:webp', function(done) {
   if (!process.env.GEN_WEBP) {
     return done();
   }
   gulp
-    .src([
-      'build/**/*.+(jpg|jpeg|png)',
-      '!build/**/_vendor/**/*'
-    ])
+    .src(['build/**/*.+(jpg|jpeg|png)', '!build/**/_vendor/**/*'])
     .pipe(
-      through.obj(function (file, enc, next) {
+      through.obj(function(file, enc, next) {
         imagemin
           .buffer(file.contents, {
             plugins: [
               imageminWebp({
-                quality: 75
-              })
-            ]
+                quality: 75,
+              }),
+            ],
           })
           .then(data => {
             file.contents = data;
@@ -36,30 +33,26 @@ gulp.task('imagemin:webp', function (done) {
             log('imagemin: error with file "' + file.path + '"');
             next(err);
           });
-      })
+      }),
     )
     .pipe(gulp.dest('build'))
-    .on('finish', function () {
+    .on('finish', function() {
       done();
     });
 });
 
-gulp.task('imagemin:png', ['imagemin:webp'], function () {
+gulp.task('imagemin:png', ['imagemin:webp'], function() {
   return gulp
-    .src([
-      'build/**/*.png',
-      '!build/**/*.min.png',
-      '!build/**/_vendor/**/*'
-    ])
+    .src(['build/**/*.png', '!build/**/*.min.png', '!build/**/_vendor/**/*'])
     .pipe(
-      through.obj(function (file, enc, next) {
+      through.obj(function(file, enc, next) {
         imagemin
           .buffer(file.contents, {
             plugins: [
               imageminOptipng({
-                optimizationLevel: 4
-              })
-            ]
+                optimizationLevel: 4,
+              }),
+            ],
           })
           .then(data => {
             file.contents = data;
@@ -70,27 +63,23 @@ gulp.task('imagemin:png', ['imagemin:webp'], function () {
             log('imagemin: error with file "' + file.path + '"');
             next(err);
           });
-      })
+      }),
     )
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('imagemin:jpg', ['imagemin:webp'], function () {
+gulp.task('imagemin:jpg', ['imagemin:webp'], function() {
   return gulp
-    .src([
-      'build/**/*.+(jpg|jpeg)',
-      '!build/**/*.min.+(jpg|jpeg)',
-      '!build/**/_vendor/**/*'
-    ])
+    .src(['build/**/*.+(jpg|jpeg)', '!build/**/*.min.+(jpg|jpeg)', '!build/**/_vendor/**/*'])
     .pipe(
-      through.obj(function (file, enc, next) {
+      through.obj(function(file, enc, next) {
         imagemin
           .buffer(file.contents, {
             plugins: [
               imageminMozjpeg({
-                quality: 75
-              })
-            ]
+                quality: 75,
+              }),
+            ],
           })
           .then(data => {
             file.contents = data;
@@ -101,7 +90,7 @@ gulp.task('imagemin:jpg', ['imagemin:webp'], function () {
             log('imagemin: error with file "' + file.path + '"');
             next(err);
           });
-      })
+      }),
     )
     .pipe(gulp.dest('build'));
 });

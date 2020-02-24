@@ -8,46 +8,34 @@ const exec = require('child_process').exec,
   PluginError = require('plugin-error'),
   util = require('./util');
 
-gulp.task('less', function (done) {
+gulp.task('less', function(done) {
   return gulp
-    .src(
-      [
-        'src/**/*-main.less',
-        'src/**/main.less'
-      ]
-    )
+    .src(['src/**/*-main.less', 'src/**/main.less'])
     .pipe(less())
-    .on('error', function (err) {
+    .on('error', function(err) {
       done(err);
     })
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('sass', function (done) {
+gulp.task('sass', function(done) {
   return gulp
-    .src(
-      [
-        'src/**/*-main.scss',
-        'src/**/main.scss'
-      ]
-    )
+    .src(['src/**/*-main.scss', 'src/**/main.scss'])
     .pipe(sass())
-    .on('error', function (err) {
+    .on('error', function(err) {
       done(err);
     })
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('copy', function () {
+gulp.task('copy', function() {
   return gulp
-    .src(
-      [
-        'src/robots.txt',
-        'src/**/*.+(jpg|jpeg|gif|png|otf|eot|svg|ttf|woff|woff2|ico|mp3|swf)',
-        'src/**/_vendor/**/**',
-        '!src/**/*.+(less|scss)'
-      ]
-    )
+    .src([
+      'src/robots.txt',
+      'src/**/*.+(jpg|jpeg|gif|png|otf|eot|svg|ttf|woff|woff2|ico|mp3|swf)',
+      'src/**/_vendor/**/**',
+      '!src/**/*.+(less|scss)',
+    ])
     .pipe(gulp.dest('build'));
 });
 

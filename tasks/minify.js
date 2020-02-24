@@ -6,44 +6,38 @@ const path = require('path'),
   minify = require('gulp-minifier');
 
 // minify js, css, html
-gulp.task('minify', function () {
+gulp.task('minify', function() {
   const doMinify = (conf.ENV === 'production' || conf.ENV === 'staging') && !process.env.NO_MINIFY;
 
   return gulp
-    .src(
-      [
-        'build/**/*.+(js|css|html)',
-        '!build/**/*.min.+(js|css)'
-      ],
-      {base: path.resolve('build')}
-    )
+    .src(['build/**/*.+(js|css|html)', '!build/**/*.min.+(js|css)'], { base: path.resolve('build') })
     .pipe(
       gulpif(
         doMinify,
-        cache('minify', 'build', function () {
+        cache('minify', 'build', function() {
           return minify({
             minify: doMinify,
             minifyHTML: {
               collapseWhitespace: true,
-              conservativeCollapse: false
+              conservativeCollapse: false,
             },
             minifyJS: {
               sourceMap: {
-                getUrl: function (sourcePath) {
+                getUrl: function(sourcePath) {
                   return path.basename(sourcePath) + '.map';
-                }
+                },
               },
               output: {
-                comments: false
-              }
+                comments: false,
+              },
             },
             minifyCSS: {
               sourceMap: true,
-              sourceMapInlineSources: true
-            }
+              sourceMapInlineSources: true,
+            },
           });
-        })
-      )
+        }),
+      ),
     )
     .pipe(gulp.dest('build'));
 });

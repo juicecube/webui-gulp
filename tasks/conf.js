@@ -1,5 +1,3 @@
-/* global process */
-
 const fs = require('fs'),
   path = require('path'),
   log = require('fancy-log'),
@@ -21,16 +19,13 @@ try {
   if (!defaultConf) {
     throw new Error('Can not resolve default config file!');
   }
+
   if (!config) {
     throw new Error(`Can not resolve config file for env "${ENV}"!`);
   }
 }
 
-const conf = Object.assign(
-  {},
-  defaultConf,
-  config
-);
+const conf = Object.assign({}, defaultConf, config);
 
 conf.BUILD_TIME = new Date().toISOString();
 conf.CACHE_DIR_NAME = '.build-cache';
@@ -40,11 +35,6 @@ conf.APP_VERSION = require(path.resolve('package.json')).version || '';
 conf.ENV = ENV;
 conf.VERSION_DIGEST_LEN = 8;
 
-log(
-  'Running env '
-    + chalk.green(ENV)
-    + ' with config '
-    + chalk.gray(JSON.stringify(conf, null, 2))
-);
+log('Running env ' + chalk.green(ENV) + ' with config ' + chalk.gray(JSON.stringify(conf, null, 2)));
 
 module.exports = conf;

@@ -3,7 +3,7 @@ const spawn = require('child_process').spawn,
   conf = require('./conf'),
   runSequence = require('run-sequence').use(gulp);
 
-gulp.task('start', function (done) {
+gulp.task('start', function(done) {
   runSequence(
     'clean:build',
     'init',
@@ -15,10 +15,12 @@ gulp.task('start', function (done) {
     'server:tsc',
     'server:tpl',
     'clean:bundle',
-    function (err) {
+    function(err) {
       done(err);
       if (!err) {
-        let server = spawn('node', [`--inspect=127.0.0.1:${conf.debugPort || 9229}`, 'www/build/app.js'], {stdio: 'inherit'});
+        let server = spawn('node', [`--inspect=127.0.0.1:${conf.debugPort || 9229}`, 'www/build/app.js'], {
+          stdio: 'inherit',
+        });
         let startTime = Date.now();
         let toRef;
         function restart() {
@@ -26,50 +28,52 @@ gulp.task('start', function (done) {
             return;
           }
           clearTimeout(toRef);
-          toRef = setTimeout(function () {
+          toRef = setTimeout(function() {
             server.kill();
-            server = spawn('node', [`--inspect=127.0.0.1:${conf.debugPort || 9229}`, 'www/build/app.js'], {stdio: 'inherit'});
+            server = spawn('node', [`--inspect=127.0.0.1:${conf.debugPort || 9229}`, 'www/build/app.js'], {
+              stdio: 'inherit',
+            });
             startTime = Date.now();
             console.log(`Development server restarted ...`);
           }, 300);
         }
-        gulp.watch(['src/**/*', 'types/**/*'], function (evt) {
-            console.log('[changed] ' + evt.path);
-            runSequence(
-              'init',
-              'bundle:asset',
-              'postcss',
-              'sprite:img',
-              'sprite:css',
-              'bundle:html',
-              'server:tpl',
-              'clean:bundle',
-              function (err) {
-                if (err) {
-                  console.log(err);
-                  return;
-                }
-                restart();
-              }
-            );
-        });
-        gulp.watch(['www/src/**/*', 'www/types/**/*'], function (evt) {
-            console.log('[changed] ' + evt.path);
-            runSequence('server:tsc', function (err) {
+        gulp.watch(['src/**/*', 'types/**/*'], function(evt) {
+          console.log('[changed] ' + evt.path);
+          runSequence(
+            'init',
+            'bundle:asset',
+            'postcss',
+            'sprite:img',
+            'sprite:css',
+            'bundle:html',
+            'server:tpl',
+            'clean:bundle',
+            function(err) {
               if (err) {
                 console.log(err);
                 return;
               }
               restart();
-            });
+            },
+          );
+        });
+        gulp.watch(['www/src/**/*', 'www/types/**/*'], function(evt) {
+          console.log('[changed] ' + evt.path);
+          runSequence('server:tsc', function(err) {
+            if (err) {
+              console.log(err);
+              return;
+            }
+            restart();
+          });
         });
         console.log(`Development server listening on http://127.0.0.1:${conf.serverPort} ...`);
       }
-    }
+    },
   );
 });
 
-gulp.task('build', function (done) {
+gulp.task('build', function(done) {
   runSequence(
     'clean:build',
     'init',
@@ -87,8 +91,8 @@ gulp.task('build', function (done) {
     'server:tpl',
     'minify',
     'clean:bundle',
-    function (err) {
+    function(err) {
       done(err);
-    }
+    },
   );
 });

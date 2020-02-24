@@ -8,23 +8,22 @@ const fs = require('fs'),
   util = require('./util'),
   through = require('through2');
 
-const DEFAULT_CACHE_BASE = path.resolve(
-  conf.CACHE_DIR_NAME,
-  conf.ENV
-);
+const DEFAULT_CACHE_BASE = path.resolve(conf.CACHE_DIR_NAME, conf.ENV);
 
 function replaceExtName(filePath, extName) {
   const ext = path.extname(filePath).toLowerCase();
   if (extName === 0) {
     return filePath;
   }
-  if ((/\.(js|jsx|ts|tsx)$/).test(filePath)) {
+
+  if (/\.(js|jsx|ts|tsx)$/.test(filePath)) {
     extName = '.js';
-  } else if ((/\.tpl\.html$/).test(filePath)) {
+  } else if (/\.tpl\.html$/.test(filePath)) {
     extName = ext + '.js';
   } else {
     extName = ext;
   }
+
   if (ext) {
     filePath = filePath.slice(0, -ext.length) + extName;
   } else {
@@ -33,55 +32,55 @@ function replaceExtName(filePath, extName) {
   return filePath;
 }
 
-module.exports = function (
+module.exports = function(
   taskName,
   base,
   workerStream,
-  {writeCache = true, cacheBase = DEFAULT_CACHE_BASE, targetExtName} = {
+  { writeCache = true, cacheBase = DEFAULT_CACHE_BASE, targetExtName } = {
     writeCache: true,
-    cacheBase: DEFAULT_CACHE_BASE
-  }
+    cacheBase: DEFAULT_CACHE_BASE,
+  },
 ) {
   base = path.resolve(base || '');
   let totalCount = 0;
   let cacheCount = 0;
-  let cacheStream = through.obj(function (file, enc, next) {
+  const cacheStream = through.obj(function(file, enc, next) {
     if (!file.isBuffer()) {
       next();
       return;
     }
     totalCount++;
-    let self = this;
-    let digest = util.getDigest(file.contents);
-    let cachePath = path.resolve(cacheBase, path.relative(base, file.path));
-    let cacheVersionPath = cachePath + '.' + digest;
+    const self = this;
+    const digest = util.getDigest(file.contents);
+    const cachePath = path.resolve(cacheBase, path.relative(base, file.path));
+    const cacheVersionPath = cachePath + '.' + digest;
     if (conf.USE_CACHE && fs.existsSync(cacheVersionPath)) {
       cacheCount++;
       file.path = replaceExtName(file.path, targetExtName);
       file.contents = fs.readFileSync(cacheVersionPath);
       this.push(file);
       if (taskName == 'minify' && fs.existsSync(cacheVersionPath + '.map')) {
-        let newFile = new Vinyl({
+        const newFile = new Vinyl({
           base: cacheBase,
           cwd: file.cwd,
           path: cachePath + '.map',
-          contents: fs.readFileSync(cacheVersionPath + '.map')
+          contents: fs.readFileSync(cacheVersionPath + '.map'),
         });
         this.push(newFile);
       }
       next();
     } else {
-      let ws = workerStream();
-      let ms = ws.pipe(
-        through.obj(function (file, enc, cb) {
+      const ws = workerStream();
+      const ms = ws.pipe(
+        through.obj(function(file, enc, cb) {
           if (path.extname(file.path).toLowerCase() == '.map') {
             self.push(file);
             if (writeCache) {
-              let newFile = new Vinyl({
+              const newFile = new Vinyl({
                 base: cacheBase,
                 cwd: file.cwd,
                 path: cacheVersionPath + '.map',
-                contents: Buffer.from(file.contents)
+                contents: Buffer.from(file.contents),
               });
               this.push(newFile);
             }
@@ -90,36 +89,34 @@ module.exports = function (
             self.push(file);
             next();
             if (writeCache) {
-              let newFile = new Vinyl({
+              const newFile = new Vinyl({
                 base: cacheBase,
                 cwd: file.cwd,
                 path: cacheVersionPath,
-                contents: Buffer.from(file.contents)
+                contents: Buffer.from(file.contents),
               });
               this.push(newFile);
             }
             cb();
           }
-        })
+        }),
       );
       writeCache && ms.pipe(gulp.dest(cacheBase));
       ws.end(file);
     }
   });
-  cacheStream.on('finish', function () {
-    log(
-      chalk.blue(taskName) + ' cache hit rate ' + cacheCount + '/' + totalCount
-    );
+  cacheStream.on('finish', function() {
+    log(chalk.blue(taskName) + ' cache hit rate ' + cacheCount + '/' + totalCount);
   });
   return cacheStream;
 };
 
-module.exports.wirteCacheFile = function (file, cacheBase = DEFAULT_CACHE_BASE) {
-  let ws = through.obj();
+module.exports.wirteCacheFile = function(file, cacheBase = DEFAULT_CACHE_BASE) {
+  const ws = through.obj();
   ws.pipe(gulp.dest(cacheBase));
   ws.end(file);
 };
 
-module.exports.getDefaultCacheBase = function () {
+module.exports.getDefaultCacheBase = function() {
   return DEFAULT_CACHE_BASE;
 };

@@ -16,18 +16,18 @@ function execGitCmd(args) {
     cwd: process.cwd(),
     env: process.env,
     stdio: 'pipe',
-    encoding: 'utf-8'
+    encoding: 'utf-8',
   })
     .trim()
     .toString()
     .split('\n');
 }
 
-exports.getWorkingDir = function (src) {
+exports.getWorkingDir = function(src) {
   return src.replace(/\/+$/, '') + (conf.WORKING_DIR ? '/' + conf.WORKING_DIR : '');
 };
 
-exports.getDigest = function (content) {
+exports.getDigest = function(content) {
   return crypto
     .createHash('md5')
     .update(content)
@@ -35,7 +35,7 @@ exports.getDigest = function (content) {
     .slice(0, conf.VERSION_DIGEST_LEN);
 };
 
-exports.isRelativeDependency = function (dep, isRelative, reqFilePath) {
+exports.isRelativeDependency = function(dep, isRelative, reqFilePath) {
   if (dep == './main') {
     return true;
   } else if (/[{}]|\bmain$/.test(dep)) {
@@ -45,49 +45,51 @@ exports.isRelativeDependency = function (dep, isRelative, reqFilePath) {
   }
 };
 
-exports.getChangedFiles = function () {
+exports.getChangedFiles = function() {
   return execGitCmd(['diff', '--name-only', '--diff-filter=ACMRTUB', 'HEAD'])
     .concat(execGitCmd(['ls-files', '--others', '--exclude-standard']))
-    .filter(function (item) {
+    .filter(function(item) {
       return item !== '';
     });
 };
 
-exports.safeRequireJson = function (path) {
+exports.safeRequireJson = function(path) {
   if (!fs.existsSync(path)) {
     return null;
   }
   return JSON.parse(stripJsonComments(fs.readFileSync(path).toString()));
 };
 
-exports.babel = function (file) {
-  return new Promise(function (resolve, reject) {
+exports.babel = function(file) {
+  return new Promise(function(resolve, reject) {
     const stream = babel();
     stream.pipe(
-      through.obj(function (file, enc, next) {
+      through.obj(function(file, enc, next) {
         resolve(file);
-      })
+      }),
     );
     stream.on('error', reject);
     stream.end(file);
   });
 };
 
-exports.postcss = function (file) {
-  return new Promise(function (resolve, reject) {
+exports.postcss = function(file) {
+  return new Promise(function(resolve, reject) {
     const stream = postcss(
       [
         postcssImport(),
         postcssPresetEnv(),
-        conf.viewportWidth ? postcssPxToViewport({
-          viewportWidth: conf.viewportWidth
-        }) : null
-      ].filter(item => item !== null)
+        conf.viewportWidth
+          ? postcssPxToViewport({
+              viewportWidth: conf.viewportWidth,
+            })
+          : null,
+      ].filter(item => item !== null),
     );
     stream.pipe(
-      through.obj(function (file, enc, next) {
+      through.obj(function(file, enc, next) {
         resolve(file);
-      })
+      }),
     );
     stream.on('error', reject);
     stream.end(file);

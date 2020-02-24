@@ -1,3 +1,5 @@
 {
-  "parser": "babylon"
+  "singleQuote": true,
+  "trailingComma": "all",
+  "printWidth": 120
 }

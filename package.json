@@ -2,7 +2,15 @@
   "name": "@mlz/webui-gulp",
   "version": "0.42.0",
   "description": "webui-gulp",
-  "scripts": {},
+  "scripts": {
+    "eslint": "eslint --ext js tasks",
+    "eslint:fix": "eslint --ext js tasks --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run eslint"
+    }
+  },
   "dependencies": {
     "@babel/core": "^7.7.2",
     "@mlz/imagemin-mozjpeg": "^8.0.1",
@@ -32,6 +40,7 @@
     "gulp-sass": "^4.0.2",
     "gulp-sus": "^0.6.0",
     "gulp-useref": "^3.0.4",
+    "husky": "^3.0.9",
     "imagemin": "^7.0.0",
     "lazypipe": "^1.0.1",
     "plugin-error": "^1.0.0",
@@ -52,7 +61,11 @@
     "vue-template-compiler": "^2.6.11"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "eslint-config-webyom": "^1.3.2"
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "@typescript-eslint/parser": "^2.5.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.1"
   }
 }

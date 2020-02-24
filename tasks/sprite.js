@@ -1,32 +1,24 @@
 const gulp = require('../').gulp(),
   imgCssSprite = require('gulp-img-css-sprite');
 
-gulp.task('sprite:img', function () {
+gulp.task('sprite:img', function() {
   return gulp
-    .src(
-      [
-        'build/**/*.+(jpg|png)'
-      ]
-    )
+    .src(['build/**/*.+(jpg|png)'])
     .pipe(
       imgCssSprite.imgStream({
-        padding: 1
-      })
+        padding: 1,
+      }),
     )
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('sprite:css', function () {
+gulp.task('sprite:css', function() {
   return gulp
-    .src(
-      [
-        'build/**/*.css'
-      ]
-    )
+    .src(['build/**/*.css'])
     .pipe(
       imgCssSprite.cssStream({
-        baseDir: 'build'
-      })
+        baseDir: 'build',
+      }),
     )
     .pipe(gulp.dest('build'));
 });

@@ -6,32 +6,27 @@ const fs = require('fs'),
   digestVersioning = require('gulp-digest-versioning');
 
 function skipFileName(fileName) {
-  if ((/chunk\.(\w{8})\.js$/).test(fileName)) {
+  if (/chunk\.(\w{8})\.js$/.test(fileName)) {
     return true;
   }
   return false;
 }
 
 function fixUrl(fileName, relPath, baseDir) {
-  if ((/chunk\.(\w{8})\.js$/).test(fileName)) {
+  if (/chunk\.(\w{8})\.js$/.test(fileName)) {
     return fileName;
   }
-  if (!(/^\//).test(fileName)) {
+
+  if (!/^\//.test(fileName)) {
     const filePath = path.resolve(path.dirname(relPath), fileName);
     fileName = path.relative(baseDir, filePath);
   }
   return conf.runtime.cdnBase.replace(/\/$/, '') + '/' + fileName.replace(/^\//, '');
 }
 
-gulp.task('versioning:asset', function () {
+gulp.task('versioning:asset', function() {
   return gulp
-    .src(
-      [
-        'build/**/*.css',
-        'build/**/*.js',
-        '!**/_vendor/**/*'
-      ]
-    )
+    .src(['build/**/*.css', 'build/**/*.js', '!**/_vendor/**/*'])
     .pipe(
       digestVersioning({
         digestLength: conf.VERSION_DIGEST_LEN,
@@ -39,13 +34,13 @@ gulp.task('versioning:asset', function () {
         destDir: 'build',
         appendToFileName: true,
         skipFileName: skipFileName,
-        fixUrl: fixUrl
-      })
+        fixUrl: fixUrl,
+      }),
     )
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('versioning:html', function () {
+gulp.task('versioning:html', function() {
   return gulp
     .src(['build/**/*.html'])
     .pipe(
@@ -55,17 +50,18 @@ gulp.task('versioning:html', function () {
         destDir: 'build',
         appendToFileName: true,
         skipFileName: skipFileName,
-        fixUrl: fixUrl
-      })
+        fixUrl: fixUrl,
+      }),
     )
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('versioning:clean', function (done) {
-  digestVersioning.getRenamedFiles().forEach(function (fileName) {
+gulp.task('versioning:clean', function(done) {
+  digestVersioning.getRenamedFiles().forEach(function(fileName) {
     if (fs.existsSync(fileName)) {
       fs.unlinkSync(fileName);
     }
+
     if (fs.existsSync(fileName + '.map')) {
       fs.unlinkSync(fileName + '.map');
     }

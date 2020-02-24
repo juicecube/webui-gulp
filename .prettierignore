@@ -1,2 +1,4 @@
-package.json
-.eslintrc.json
+/includes/
+/layouts/
+/*.js
+/*.json
