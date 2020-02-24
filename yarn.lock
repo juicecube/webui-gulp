@@ -2779,9 +2779,9 @@ gulp-html-i18n@^0.16.0:
     vinyl "^2.1.0"
     yamljs "^0.3.0"
 
-gulp-html-optimizer@^1.56.0:
-  version "1.56.0"
-  resolved "https://registry.npm.taobao.org/gulp-html-optimizer/download/gulp-html-optimizer-1.56.0.tgz#984229e2770c4126465e7ca53f13bf84920ff4c2"
+gulp-html-optimizer@^1.57.0:
+  version "1.57.0"
+  resolved "https://registry.npm.taobao.org/gulp-html-optimizer/download/gulp-html-optimizer-1.57.0.tgz#d228c4ab1a6919dbca009ccfdbcd7a5db62ba169"
   dependencies:
     clean-css "^3.4.24"
     gulp-amd-bundler "^1.32.0"
