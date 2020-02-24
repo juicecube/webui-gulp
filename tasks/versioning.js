@@ -12,13 +12,13 @@ function skipFileName(fileName) {
   return false;
 }
 
-function fixUrl(fileName, relPath, basePath) {
+function fixUrl(fileName, relPath, baseDir) {
   if ((/chunk\.(\w{8})\.js$/).test(fileName)) {
     return fileName;
   }
   if (!(/^\//).test(fileName)) {
     const filePath = path.resolve(path.dirname(relPath), fileName);
-    fileName = path.relative(basePath, filePath);
+    fileName = path.relative(baseDir, filePath);
   }
   return conf.runtime.cdnBase.replace(/\/$/, '') + '/' + fileName.replace(/^\//, '');
 }
@@ -35,8 +35,8 @@ gulp.task('versioning:asset', function () {
     .pipe(
       digestVersioning({
         digestLength: conf.VERSION_DIGEST_LEN,
-        basePath: 'build',
-        destPath: 'build',
+        baseDir: 'build',
+        destDir: 'build',
         appendToFileName: true,
         skipFileName: skipFileName,
         fixUrl: fixUrl
@@ -51,8 +51,8 @@ gulp.task('versioning:html', function () {
     .pipe(
       digestVersioning({
         digestLength: conf.VERSION_DIGEST_LEN,
-        basePath: 'build',
-        destPath: 'build',
+        baseDir: 'build',
+        destDir: 'build',
         appendToFileName: true,
         skipFileName: skipFileName,
         fixUrl: fixUrl

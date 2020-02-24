@@ -10,7 +10,7 @@ gulp.task('sus', function () {
     )
     .pipe(
       sus({
-        basePath: 'build',
+        baseDir: 'build',
         match: function (p) {
           const m = p.match(/(.+)\?data$/);
           return m && m[1];

@@ -25,7 +25,7 @@ gulp.task('sprite:css', function () {
     )
     .pipe(
       imgCssSprite.cssStream({
-        basePath: 'build'
+        baseDir: 'build'
       })
     )
     .pipe(gulp.dest('build'));
