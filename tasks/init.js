@@ -1,12 +1,6 @@
-const exec = require('child_process').exec,
-  gulp = require('../').gulp(),
-  conf = require('./conf'),
+const gulp = require('../').gulp(),
   less = require('gulp-less'),
-  sass = require('gulp-sass'),
-  cache = require('./cache'),
-  through = require('through2'),
-  PluginError = require('plugin-error'),
-  util = require('./util');
+  sass = require('gulp-sass');
 
 gulp.task('less', function(done) {
   return gulp

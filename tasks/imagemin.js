@@ -4,8 +4,7 @@ const gulp = require('../').gulp(),
   imagemin = require('imagemin'),
   imageminWebp = require('@mlz/imagemin-webp'),
   imageminOptipng = require('@mlz/imagemin-optipng'),
-  imageminMozjpeg = require('@mlz/imagemin-mozjpeg'),
-  conf = require('./conf');
+  imageminMozjpeg = require('@mlz/imagemin-mozjpeg');
 
 gulp.task('imagemin:webp', function(done) {
   if (!process.env.GEN_WEBP) {

@@ -1,5 +1,4 @@
 const fs = require('fs'),
-  path = require('path'),
   crypto = require('crypto'),
   execFileSync = require('child_process').execFileSync,
   stripJsonComments = require('strip-json-comments'),

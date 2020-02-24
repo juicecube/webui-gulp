@@ -1,8 +1,5 @@
 const gulp = require('../').gulp(),
-  conf = require('./conf'),
-  lazyTasks = require('./lazy-tasks'),
-  htmlI18n = require('gulp-html-i18n'),
-  mt2amd = require('gulp-mt2amd');
+  htmlI18n = require('gulp-html-i18n');
 
 // validate consistence between each lang version
 gulp.task('i18n:validate', function() {

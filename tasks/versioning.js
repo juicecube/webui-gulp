@@ -2,7 +2,6 @@ const fs = require('fs'),
   path = require('path'),
   gulp = require('../').gulp(),
   conf = require('./conf'),
-  util = require('./util'),
   digestVersioning = require('gulp-digest-versioning');
 
 function skipFileName(fileName) {

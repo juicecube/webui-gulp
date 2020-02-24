@@ -1,4 +1,5 @@
-let gulp = require('gulp');
+let gulp;
+
 const requireAll = require('require-all');
 const conf = require('./tasks/conf');
 
