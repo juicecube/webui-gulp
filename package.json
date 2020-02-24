@@ -3,8 +3,8 @@
   "version": "0.42.0",
   "description": "webui-gulp",
   "scripts": {
-    "eslint": "eslint --ext js tasks",
-    "eslint:fix": "eslint --ext js tasks --fix"
+    "eslint": "eslint --ext js tasks index.js",
+    "eslint:fix": "eslint --ext js tasks index.js --fix"
   },
   "husky": {
     "hooks": {

@@ -3,30 +3,30 @@ const requireAll = require('require-all');
 const conf = require('./tasks/conf');
 
 const webuiGulp = {
-  gulp: function () {
+  gulp: function() {
     return gulp;
   },
 
-  use: function (useGulp) {
+  use: function(useGulp) {
     if (useGulp) {
       gulp = useGulp;
     }
     return webuiGulp;
   },
 
-  loadTasks: function () {
+  loadTasks: function() {
     requireAll({
       dirname: __dirname + '/tasks',
       filter: /(.*)\.js$/,
-      recursive: true
+      recursive: true,
     });
-    webuiGulp.loadTasks = function () {};
+    webuiGulp.loadTasks = function() {};
     return webuiGulp;
   },
 
-  getConfig: function () {
+  getConfig: function() {
     return conf;
-  }
+  },
 };
 
 module.exports = webuiGulp;
