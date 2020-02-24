@@ -5,9 +5,9 @@
 .gitattributes
 .gitignore
 .npmignore
+.npmrc
 .nvmrc
 .prettierignore
 .prettierrc.json
-.yarnrc
 package-lock.json
 yarn.lock
