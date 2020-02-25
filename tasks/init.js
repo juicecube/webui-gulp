@@ -1,26 +1,4 @@
-const gulp = require('../').gulp(),
-  less = require('gulp-less'),
-  sass = require('gulp-sass');
-
-gulp.task('less', function(done) {
-  return gulp
-    .src(['src/**/*-main.less', 'src/**/main.less'])
-    .pipe(less())
-    .on('error', function(err) {
-      done(err);
-    })
-    .pipe(gulp.dest('build'));
-});
-
-gulp.task('sass', function(done) {
-  return gulp
-    .src(['src/**/*-main.scss', 'src/**/main.scss'])
-    .pipe(sass())
-    .on('error', function(err) {
-      done(err);
-    })
-    .pipe(gulp.dest('build'));
-});
+const gulp = require('../').gulp();
 
 gulp.task('copy', function() {
   return gulp
@@ -33,4 +11,4 @@ gulp.task('copy', function() {
     .pipe(gulp.dest('build'));
 });
 
-gulp.task('init', ['copy', 'less', 'sass', 'mt']);
+gulp.task('init', ['copy', 'mt']);

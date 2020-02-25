@@ -1,7 +1,22 @@
-const spawn = require('child_process').spawn,
+const path = require('path'),
+  spawn = require('child_process').spawn,
   gulp = require('../').gulp(),
   conf = require('./conf'),
+  log = require('fancy-log'),
+  chalk = require('chalk'),
   runSequence = require('run-sequence').use(gulp);
+
+function logLine() {
+  log('------------------------------------------------------------------------');
+}
+
+function logListening() {
+  console.log(`Development server listening on http://127.0.0.1:${conf.serverPort} ...`);
+}
+
+function logChanged(filePath) {
+  log("Changed  '" + chalk.green(path.relative(process.cwd(), filePath)) + "'");
+}
 
 gulp.task('start', function(done) {
   runSequence(
@@ -34,40 +49,68 @@ gulp.task('start', function(done) {
               stdio: 'inherit',
             });
             startTime = Date.now();
-            console.log(`Development server restarted ...`);
+            log('Done');
+            logLine();
+            logListening();
           }, 300);
         }
-        gulp.watch(['src/**/*', 'types/**/*'], function(evt) {
-          console.log('[changed] ' + evt.path);
-          runSequence(
-            'init',
-            'bundle:asset',
-            'postcss',
-            'sprite:img',
-            'sprite:css',
-            'bundle:html',
-            'server:tpl',
-            'clean:bundle',
-            function(err) {
+        gulp.watch(
+          ['src/**/*.+(ts|tsx|js|jsx|vue)', 'src/**/*.+(scss|less)', '!src/**/*.inc.+(ts|js)', '!src/**/_vendor/**/**'],
+          function(evt) {
+            logLine();
+            logChanged(evt.path);
+            runSequence('bundle:asset', 'postcss', 'sprite:img', 'sprite:css', function(err) {
               if (err) {
-                console.log(err);
+                console.error(err);
                 return;
               }
-              restart();
-            },
-          );
-        });
-        gulp.watch(['www/src/**/*', 'www/types/**/*'], function(evt) {
-          console.log('[changed] ' + evt.path);
+              log('Done');
+              logLine();
+              logListening();
+            });
+          },
+        );
+        gulp.watch(
+          [
+            'src/**/*.html',
+            'src/**/*.inc.+(ts|js)',
+            'src/**/*.+(jpg|jpeg|gif|png|otf|eot|svg|ttf|woff|woff2|ico|mp3|swf)',
+            'src/**/_vendor/**/**',
+          ],
+          function(evt) {
+            logLine();
+            logChanged(evt.path);
+            runSequence(
+              'init',
+              'bundle:asset',
+              'postcss',
+              'sprite:img',
+              'sprite:css',
+              'bundle:html',
+              'server:tpl',
+              'clean:bundle',
+              function(err) {
+                if (err) {
+                  console.error(err);
+                  return;
+                }
+                restart();
+              },
+            );
+          },
+        );
+        gulp.watch(['www/src/**/*'], function(evt) {
+          logLine();
+          logChanged(evt.path);
           runSequence('server:tsc', function(err) {
             if (err) {
-              console.log(err);
+              console.error(err);
               return;
             }
             restart();
           });
         });
-        console.log(`Development server listening on http://127.0.0.1:${conf.serverPort} ...`);
+        logListening();
       }
     },
   );
