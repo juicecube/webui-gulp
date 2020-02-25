@@ -1,10 +1,46 @@
-const path = require('path'),
+const fs = require('fs'),
+  path = require('path'),
   spawn = require('child_process').spawn,
   gulp = require('../').gulp(),
   conf = require('./conf'),
+  util = require('./util'),
   log = require('fancy-log'),
   chalk = require('chalk'),
   runSequence = require('run-sequence').use(gulp);
+
+let currentTask;
+const execQueue = [];
+
+function checkExecQueue() {
+  if (!execQueue.length || currentTask) {
+    return;
+  }
+  currentTask = execQueue.shift();
+  currentTask.exec(function() {
+    setTimeout(function() {
+      currentTask = null;
+      checkExecQueue();
+    }, 500);
+  });
+}
+
+function enqueue(filePath, taskFun) {
+  const digest = util.getDigest(fs.readFileSync(filePath).toString());
+  if (
+    (currentTask && currentTask.path === filePath && currentTask.digest === digest) ||
+    execQueue.some(function(task) {
+      return task.path === filePath && task.digest === digest;
+    })
+  ) {
+    return;
+  }
+  execQueue.push({
+    digest: digest,
+    path: filePath,
+    exec: taskFun,
+  });
+  checkExecQueue();
+}
 
 function logLine() {
   log('------------------------------------------------------------------------');
@@ -54,22 +90,31 @@ gulp.task('start', function(done) {
             logListening();
           }, 300);
         }
+
         gulp.watch(
           ['src/**/*.+(ts|tsx|js|jsx|vue)', 'src/**/*.+(scss|less)', '!src/**/*.inc.+(ts|js)', '!src/**/_vendor/**/**'],
           function(evt) {
-            logLine();
-            logChanged(evt.path);
-            runSequence('bundle:asset', 'postcss', 'sprite:img', 'sprite:css', function(err) {
-              if (err) {
-                console.error(err);
-                return;
-              }
-              log('Done');
+            const filePath = evt.path;
+            if (evt.type !== 'changed') {
+              return;
+            }
+            enqueue(filePath, function execTask(cb) {
               logLine();
-              logListening();
+              logChanged(filePath);
+              runSequence('bundle:asset', 'postcss', 'sprite:img', 'sprite:css', function(err) {
+                cb && cb();
+                if (err) {
+                  console.error(err);
+                  return;
+                }
+                log('Done');
+                logLine();
+                logListening();
+              });
             });
           },
         );
+
         gulp.watch(
           [
             'src/**/*.html',
@@ -78,38 +123,54 @@ gulp.task('start', function(done) {
             'src/**/_vendor/**/**',
           ],
           function(evt) {
-            logLine();
-            logChanged(evt.path);
-            runSequence(
-              'init',
-              'bundle:asset',
-              'postcss',
-              'sprite:img',
-              'sprite:css',
-              'bundle:html',
-              'server:tpl',
-              'clean:bundle',
-              function(err) {
-                if (err) {
-                  console.error(err);
-                  return;
-                }
-                restart();
-              },
-            );
-          },
-        );
-        gulp.watch(['www/src/**/*'], function(evt) {
-          logLine();
-          logChanged(evt.path);
-          runSequence('server:tsc', function(err) {
-            if (err) {
-              console.error(err);
+            const filePath = evt.path;
+            if (evt.type !== 'changed') {
               return;
             }
-            restart();
+            enqueue(filePath, function execTask(cb) {
+              logLine();
+              logChanged(filePath);
+              runSequence(
+                'init',
+                'bundle:asset',
+                'postcss',
+                'sprite:img',
+                'sprite:css',
+                'bundle:html',
+                'server:tpl',
+                'clean:bundle',
+                function(err) {
+                  cb && cb();
+                  if (err) {
+                    console.error(err);
+                    return;
+                  }
+                  restart();
+                },
+              );
+            });
+          },
+        );
+
+        gulp.watch(['www/src/**/*'], function(evt) {
+          const filePath = evt.path;
+          if (evt.type !== 'changed') {
+            return;
+          }
+          enqueue(filePath, function execTask(cb) {
+            logLine();
+            logChanged(filePath);
+            runSequence('server:tsc', function(err) {
+              cb && cb();
+              if (err) {
+                console.error(err);
+                return;
+              }
+              restart();
+            });
           });
         });
+
         logListening();
       }
     },

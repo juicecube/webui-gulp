@@ -1,12 +1,5 @@
-package-lock.json
-
-.project
-
-/artifacts/
-/build/
-/node_modules/
-/protractor-batch-artifacts/
-/results
+yarn.lock
+*~
 
 ### Bower ###
 bower_components
