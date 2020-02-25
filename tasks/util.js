@@ -22,8 +22,14 @@ function execGitCmd(args) {
     .split('\n');
 }
 
+let workingDir;
+
 exports.getWorkingDir = function(src) {
-  return src.replace(/\/+$/, '') + (conf.WORKING_DIR ? '/' + conf.WORKING_DIR : '');
+  return src.replace(/\/+$/, '') + (workingDir ? '/' + workingDir : '');
+};
+
+exports.changeWorkingDir = function(dir = '') {
+  workingDir = dir.replace(/^\/+|\/+$/, '');
 };
 
 exports.getDigest = function(content) {

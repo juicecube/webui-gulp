@@ -16,6 +16,9 @@ function checkExecQueue() {
     return;
   }
   currentTask = execQueue.shift();
+  util.changeWorkingDir(
+    path.relative(process.cwd(), currentTask.path).indexOf('src/common/') === 0 ? '/' : conf.WORKING_DIR,
+  );
   currentTask.exec(function() {
     setTimeout(function() {
       currentTask = null;
@@ -91,8 +94,15 @@ gulp.task('start', function(done) {
           }, 300);
         }
 
+        util.changeWorkingDir(conf.WORKING_DIR);
+
         gulp.watch(
-          ['src/**/*.+(ts|tsx|js|jsx|vue)', 'src/**/*.+(scss|less)', '!src/**/*.inc.+(ts|js)', '!src/**/_vendor/**/**'],
+          [
+            util.getWorkingDir('src') + '/**/*.+(ts|tsx|js|jsx|vue|scss)',
+            'src/common/**/*.+(ts|tsx|js|jsx|vue|scss)',
+            '!src/**/*.inc.+(ts|js)',
+            '!src/**/_vendor/**/**',
+          ],
           function(evt) {
             const filePath = evt.path;
             if (evt.type !== 'changed') {
@@ -117,10 +127,10 @@ gulp.task('start', function(done) {
 
         gulp.watch(
           [
-            'src/**/*.html',
-            'src/**/*.inc.+(ts|js)',
-            'src/**/*.+(jpg|jpeg|gif|png|otf|eot|svg|ttf|woff|woff2|ico|mp3|swf)',
-            'src/**/_vendor/**/**',
+            util.getWorkingDir('src') + '/**/*.html',
+            util.getWorkingDir('src') + '/**/*.inc.+(ts|js)',
+            util.getWorkingDir('src') + '/**/*.+(jpg|jpeg|gif|png|otf|eot|svg|ttf|woff|woff2|ico|mp3|swf)',
+            util.getWorkingDir('src') + '/**/_vendor/**/**',
           ],
           function(evt) {
             const filePath = evt.path;
