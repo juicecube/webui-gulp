@@ -1,6 +1,6 @@
 {
   "name": "@mlz/webui-gulp",
-  "version": "0.46.0",
+  "version": "0.47.0",
   "description": "webui-gulp",
   "scripts": {
     "eslint": "eslint --ext js tasks index.js",
@@ -52,7 +52,6 @@
     "run-sequence": "^1.1.5",
     "strip-json-comments": "^2.0.1",
     "through2": "^2.0.0",
-    "tslib": "^1.10.0",
     "vinyl": "^2.1.0",
     "vue-template-compiler": "^2.6.11"
   },
