@@ -114,6 +114,7 @@ gulp.task('bundle:html:init', function() {
     .pipe(
       propertyMerge({
         properties: Object.assign({}, conf),
+        fallback: '',
       }),
     )
     .pipe(
@@ -204,6 +205,7 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function() {
     .pipe(
       propertyMerge({
         properties: Object.assign({}, conf),
+        fallback: '',
       }),
     )
     .pipe(gulpif(!!conf.defaultLang, htmlI18n.i18nPath()))

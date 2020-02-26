@@ -34,6 +34,7 @@ conf.USE_CACHE = process.env.BUILD_CACHE != '0';
 conf.APP_VERSION = require(path.resolve('package.json')).version || '';
 conf.ENV = ENV;
 conf.VERSION_DIGEST_LEN = 8;
+conf.DEFAULT_LIVE_RELOAD_PORT = '9981';
 
 log('Running env ' + chalk.green(ENV) + ' with config ' + chalk.gray(JSON.stringify(conf, null, 2)));
 

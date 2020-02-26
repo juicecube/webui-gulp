@@ -39,5 +39,8 @@
     <!-- yield "script" --><!-- /yield -->
 
     <!-- include "../includes/boot.inc.ts" -->
+
+    <!-- include "../includes/socket.io.js" if="%{{ENV === 'local' ? 'yes' : 'no'}}%" -->
+    <!-- include "../includes/live-reload.inc.ts" if="%{{ENV === 'local' ? 'yes' : 'no'}}%" -->
   </body>
 </html>

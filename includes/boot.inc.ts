@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 (function(): void {
   function removeNode(id: string | HTMLElement): void {
     const el = typeof id === 'string' ? document.getElementById(id) : id;
@@ -7,7 +5,13 @@
   }
 
   function load(id: string | HTMLElement, cb?: Function): void {
-    const el = typeof id === 'string' ? document.getElementById(id) : id;
+    let el;
+    if (typeof id === 'string') {
+      el = document.getElementById(id);
+    } else {
+      el = id;
+      id = '';
+    }
     if (el) {
       let src: string, newEl: any;
       if (el.tagName === 'SCRIPT') {
@@ -21,6 +25,10 @@
         newEl.rel = 'stylesheet';
         newEl.href = src;
       }
+      removeNode(el);
+      if (id) {
+        newEl.id = id;
+      }
 
       newEl.onload = function(): void {
         cb && cb();
@@ -32,7 +40,6 @@
       };
 
       document.body.appendChild(newEl);
-      removeNode(el);
     } else {
       console.log('Can not find element with id "' + id + '"');
       cb && cb(1);

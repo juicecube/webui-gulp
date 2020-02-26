@@ -1,11 +1,12 @@
 const fs = require('fs'),
   path = require('path'),
-  spawn = require('child_process').spawn,
+  { spawn, execFile } = require('child_process'),
   gulp = require('../').gulp(),
   conf = require('./conf'),
   util = require('./util'),
   log = require('fancy-log'),
   chalk = require('chalk'),
+  { startLiveReloadServer } = require('./live-reload'),
   runSequence = require('run-sequence').use(gulp);
 
 let currentTask;
@@ -16,11 +17,15 @@ function checkExecQueue() {
     return;
   }
   currentTask = execQueue.shift();
-  util.changeWorkingDir(
-    path.relative(process.cwd(), currentTask.path).indexOf('src/common/') === 0 ? '/' : conf.WORKING_DIR,
-  );
+  const filePath = path.relative(process.cwd(), currentTask.path);
+  util.changeWorkingDir(filePath.indexOf('src/common/') === 0 ? '/' : conf.WORKING_DIR);
   currentTask.exec(function() {
     setTimeout(function() {
+      execFile(
+        'curl',
+        [`http://127.0.0.1:9981/?source=${filePath}`, '-H', "'Pragma: no-cache'", '-H', "'Cache-Control: no-cache'"],
+        function() {},
+      );
       currentTask = null;
       checkExecQueue();
     }, 500);
@@ -72,6 +77,8 @@ gulp.task('start', function(done) {
     function(err) {
       done(err);
       if (!err) {
+        startLiveReloadServer();
+
         let server = spawn('node', [`--inspect=127.0.0.1:${conf.debugPort || 9229}`, 'www/build/app.js'], {
           stdio: 'inherit',
         });
