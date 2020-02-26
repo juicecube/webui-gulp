@@ -29,7 +29,12 @@
 
     <!-- yield "content" --><!-- /yield -->
 
+    <!-- yield "polyfill" -->
     <script id="polyfill-script" type="text/template" src="/common/scripts/polyfill/main.js"></script>
+    <script>
+      G.__REQUIRE_POLYFILL__ = !window.Promise || !window.fetch;
+    </script>
+    <!-- /yield -->
 
     <!-- yield "script" --><!-- /yield -->
 

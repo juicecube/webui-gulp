@@ -1,6 +1,6 @@
 /**
  * REM等比适配多分辨率
- * 设计稿以750为准
+ * 设计稿以375为准
  */
 (function(doc, win): void {
   const docEl = doc.documentElement,
@@ -10,7 +10,7 @@
       if (!clientWidth) {
         return;
       }
-      docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+      docEl.style.fontSize = 100 * (clientWidth / 375) + 'px';
     };
 
   if (!doc.addEventListener) {

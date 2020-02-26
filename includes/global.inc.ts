@@ -1,4 +1,6 @@
 const G: Record<string, any> = {
+  __REQUIRE_POLYFILL__: false,
+  __COMPONENTS__: {},
   SERVER_INJECTED_DATA: {},
   ENV: '', // inject at runtime
   BUILD_TIME: '%{{BUILD_TIME}}%',
