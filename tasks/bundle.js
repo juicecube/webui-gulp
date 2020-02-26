@@ -142,6 +142,15 @@ gulp.task('bundle:html:init', function() {
             NODE_ENV: conf.ENV,
           },
         },
+        layoutPreprocess: function(file, cb) {
+          file.contents = Buffer.from(
+            propertyMerge.replaceProperties(file, {
+              properties: Object.assign({}, conf),
+              fallback: '',
+            }),
+          );
+          cb(file);
+        },
       }),
     )
     .pipe(gulp.dest('build'));

@@ -208,9 +208,9 @@ gulp.task('build', function(done) {
     'bundle:html',
     'versioning:html',
     'versioning:clean',
+    'minify',
     'server:tsc',
     'server:tpl',
-    'minify',
     'clean:bundle',
     function(err) {
       done(err);
