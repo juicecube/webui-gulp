@@ -73,6 +73,13 @@ gulp.task('bundle:asset:ts', function() {
               rollupMt2amd({ babel: util.babel, strictMode: true }),
               rollupScss({
                 output: path.join(outDir, 'main.css'),
+                importer: function(url) {
+                  if (url.indexOf('~') === 0) {
+                    const filePath = path.join(path.resolve('node_modules'), url.slice(1));
+                    return { file: filePath };
+                  }
+                  return { file: url };
+                },
               }),
               rollupVue(),
             ],
