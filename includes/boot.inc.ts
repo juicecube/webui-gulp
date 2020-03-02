@@ -46,7 +46,9 @@
     }
   }
 
-  function loadAsync(): void {
+  function boot(): void {
+    const main = (window as any).main;
+    main.boot && main.boot();
     document.querySelectorAll('script[data-async]').forEach(function(el) {
       load(el as HTMLElement);
     });
@@ -57,28 +59,24 @@
     removeNode('main-script');
     if (G.__REQUIRE_POLYFILL__) {
       load('polyfill-script', function() {
-        (window as any).main.boot();
-        loadAsync();
+        boot();
       });
     } else {
       removeNode('polyfill-script');
-      (window as any).main.boot();
-      loadAsync();
+      boot();
     }
   } else {
     load('main-style', function() {
       if (G.__REQUIRE_POLYFILL__) {
         load('polyfill-script', function() {
           load('main-script', function() {
-            (window as any).main.boot();
-            loadAsync();
+            boot();
           });
         });
       } else {
         removeNode('polyfill-script');
         load('main-script', function() {
-          (window as any).main.boot();
-          loadAsync();
+          boot();
         });
       }
     });

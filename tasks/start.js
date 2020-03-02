@@ -19,16 +19,19 @@ function checkExecQueue() {
   currentTask = execQueue.shift();
   const filePath = path.relative(process.cwd(), currentTask.path);
   util.changeWorkingDir(filePath.indexOf('src/common/') === 0 ? '/' : conf.WORKING_DIR);
-  currentTask.exec(function() {
-    setTimeout(function() {
-      execFile(
-        'curl',
-        [`http://127.0.0.1:9981/?source=${filePath}`, '-H', "'Pragma: no-cache'", '-H', "'Cache-Control: no-cache'"],
-        function() {},
-      );
-      currentTask = null;
-      checkExecQueue();
-    }, 500);
+  currentTask.exec(function(needRestart) {
+    setTimeout(
+      function() {
+        execFile(
+          'curl',
+          [`http://127.0.0.1:9981/?source=${filePath}`, '-H', "'Pragma: no-cache'", '-H', "'Cache-Control: no-cache'"],
+          function() {},
+        );
+        currentTask = null;
+        checkExecQueue();
+      },
+      needRestart ? 500 : 0,
+    );
   });
 }
 
@@ -157,7 +160,7 @@ gulp.task('start', function(done) {
                 'server:tpl',
                 'clean:bundle',
                 function(err) {
-                  cb && cb();
+                  cb && cb(true);
                   if (err) {
                     console.error(err);
                     return;
@@ -178,7 +181,7 @@ gulp.task('start', function(done) {
             logLine();
             logChanged(filePath);
             runSequence('server:tsc', function(err) {
-              cb && cb();
+              cb && cb(true);
               if (err) {
                 console.error(err);
                 return;
