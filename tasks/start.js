@@ -203,6 +203,7 @@ gulp.task('build', function(done) {
     'init',
     'imagemin',
     'bundle:asset',
+    'babel',
     'postcss',
     'sus',
     'sprite:img',
