@@ -1,4 +1,5 @@
 const path = require('path'),
+  fs = require('fs'),
   gulp = require('../').gulp(),
   conf = require('./conf'),
   util = require('./util'),
@@ -8,6 +9,7 @@ const path = require('path'),
   userefCostomBlocks = require('./useref-custom-blocks'),
   lazyTasks = require('./lazy-tasks'),
   rollup = require('rollup'),
+  rollupAnalyzer = require('rollup-plugin-analyzer'),
   rollupAlias = require('@rollup/plugin-alias'),
   rollupTypescript = require('@rollup/plugin-typescript'),
   rollupNodeResolve = require('@rollup/plugin-node-resolve'),
@@ -36,6 +38,7 @@ gulp.task('bundle:asset:ts', function() {
             return $1.toUpperCase();
           });
         const outDir = path.dirname(path.join('build', path.relative(file.base, file.path)));
+        let analysis = null;
         rollup
           .rollup({
             input: file.path,
@@ -48,6 +51,15 @@ gulp.task('bundle:asset:ts', function() {
                   }
                 : undefined,
             plugins: [
+              process.env.ANALYSIS
+                ? rollupAnalyzer({
+                    summaryOnly: true,
+                    writeTo: function(content) {
+                      const outPath = path.join(outDir, 'main.analysis.txt');
+                      analysis = [outPath, content];
+                    },
+                  })
+                : null,
               rollupNodeResolve({
                 mainFields: ['module', 'browser', 'main'],
                 preferBuiltins: false,
@@ -102,6 +114,9 @@ gulp.task('bundle:asset:ts', function() {
             }
           })
           .then(function() {
+            if (analysis) {
+              fs.writeFileSync(analysis[0], analysis[1]);
+            }
             next();
           })
           .catch(function(err) {
