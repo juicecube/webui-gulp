@@ -47,11 +47,24 @@
   }
 
   function boot(): void {
-    const main = (window as any).main;
-    main.boot && main.boot();
     document.querySelectorAll('script[data-async]').forEach(function(el) {
-      load(el as HTMLElement);
+      let entry;
+      const promise = new Promise(function(resolve, reject) {
+        entry = el.getAttribute('data-entry');
+        load(el as HTMLElement, function(errCode: number) {
+          if (errCode) {
+            reject(errCode);
+          } else {
+            resolve(entry && window[entry]);
+          }
+        });
+      });
+      if (entry) {
+        G.ASYNC_SCRIPT_PROMISE[entry] = promise;
+      }
     });
+    const main = window['main'];
+    main?.boot && main.boot();
   }
 
   if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
