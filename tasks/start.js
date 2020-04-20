@@ -58,7 +58,12 @@ function logLine() {
 }
 
 function logListening() {
-  console.log(`Development server listening on http://127.0.0.1:${conf.serverPort} ...`);
+  const addrs = [`http://127.0.0.1:${conf.serverPort}`];
+  const lanIp = util.getLanIp();
+  if (lanIp) {
+    addrs.push(`http://${lanIp}:${conf.serverPort}`);
+  }
+  console.log(`Development server listening on ${addrs.join(' ')} ...`);
 }
 
 function logChanged(filePath) {

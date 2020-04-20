@@ -1,4 +1,5 @@
-const fs = require('fs'),
+const os = require('os'),
+  fs = require('fs'),
   crypto = require('crypto'),
   execFileSync = require('child_process').execFileSync,
   stripJsonComments = require('strip-json-comments'),
@@ -99,4 +100,16 @@ exports.postcss = function(file) {
     stream.on('error', reject);
     stream.end(file);
   });
+};
+
+exports.getLanIp = function() {
+  for (const [dev, items] of Object.entries(os.networkInterfaces())) {
+    if (dev === 'en0') {
+      for (const item of items) {
+        if (item.family === 'IPv4') {
+          return item.address;
+        }
+      }
+    }
+  }
 };
