@@ -19,6 +19,10 @@
         newEl = document.createElement('script');
         newEl.src = src;
         newEl.async = true;
+        const crossOrigin = el.getAttribute('crossorigin');
+        if (crossOrigin != null) {
+          newEl.crossOrigin = crossOrigin;
+        }
       } else {
         src = el.getAttribute('href');
         newEl = document.createElement('link');
