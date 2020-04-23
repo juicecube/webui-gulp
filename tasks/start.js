@@ -115,6 +115,8 @@ gulp.task('start', function(done) {
           [
             util.getWorkingDir('src') + '/**/*.+(ts|tsx|js|jsx|vue|scss)',
             'src/common/**/*.+(ts|tsx|js|jsx|vue|scss)',
+            '!src/common/includes/**/*',
+            '!src/common/layouts/**/*',
             '!src/**/*.inc.+(ts|js)',
             '!src/**/_vendor/**/**',
           ],
@@ -146,6 +148,8 @@ gulp.task('start', function(done) {
             util.getWorkingDir('src') + '/**/*.inc.+(ts|js)',
             util.getWorkingDir('src') + '/**/*.+(jpg|jpeg|gif|png|otf|eot|svg|ttf|woff|woff2|ico|mp3|swf)',
             util.getWorkingDir('src') + '/**/_vendor/**/**',
+            'src/common/includes/**/*',
+            'src/common/layouts/**/*',
           ],
           function(evt) {
             const filePath = evt.path;
