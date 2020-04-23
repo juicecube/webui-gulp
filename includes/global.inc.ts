@@ -1,5 +1,6 @@
 const G: Record<string, any> = {
   __REQUIRE_POLYFILL__: false,
+  __ERROR_QUEUE__: [],
   __COMPONENTS__: {},
   SERVER_INJECTED_DATA: {},
   ASYNC_SCRIPT_PROMISE: {},
