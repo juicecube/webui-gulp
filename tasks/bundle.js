@@ -142,6 +142,7 @@ gulp.task('bundle:html:init', function() {
     .pipe(
       htmlOptimizer({
         baseDir: 'build',
+        babel: util.babel,
         minifyJS: doMinify
           ? {
               output: {
@@ -186,6 +187,7 @@ gulp.task('bundle:html:optimize', ['bundle:html:init'], function() {
     .pipe(
       htmlOptimizer({
         baseDir: 'build',
+        babel: util.babel,
         minifyJS: doMinify
           ? {
               output: {
