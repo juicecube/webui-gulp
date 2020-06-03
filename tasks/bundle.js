@@ -64,11 +64,7 @@ gulp.task('bundle:asset:ts', function() {
                 mainFields: ['module', 'browser', 'main'],
                 preferBuiltins: false,
               }),
-              rollupCommonjs({
-                namedExports: {
-                  fingerprintjs2: ['get', 'x64hash128'],
-                },
-              }),
+              rollupCommonjs(),
               rollupAlias({
                 entries: [
                   { find: 'react', replacement: 'preact/compat' },
