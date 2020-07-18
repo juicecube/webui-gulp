@@ -15,7 +15,7 @@
     if (el) {
       let src: string, newEl: any;
       if (el.tagName === 'SCRIPT') {
-        src = el.getAttribute('src');
+        src = el.getAttribute('data-src') || el.getAttribute('src');
         newEl = document.createElement('script');
         newEl.src = src;
         newEl.async = true;
@@ -24,7 +24,7 @@
           newEl.crossOrigin = crossOrigin;
         }
       } else {
-        src = el.getAttribute('href');
+        src = el.getAttribute('data-href') || el.getAttribute('href');
         newEl = document.createElement('link');
         newEl.rel = 'stylesheet';
         newEl.href = src;
@@ -51,7 +51,9 @@
   }
 
   function boot(): void {
-    document.querySelectorAll('script[data-async]').forEach(function(el) {
+    const els = document.querySelectorAll('script[data-async]');
+    for (let i = 0; i < els.length; i++) {
+      const el = els[i];
       let entry;
       const promise = new Promise(function(resolve, reject) {
         entry = el.getAttribute('data-entry');
