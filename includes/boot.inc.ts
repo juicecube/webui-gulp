@@ -70,7 +70,7 @@
       }
     });
     const main = window['main'];
-    main?.boot && main.boot();
+    main && main.boot();
   }
 
   if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {

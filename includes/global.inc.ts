@@ -9,9 +9,17 @@ const G: Record<string, any> = {
   APP_VERSION: '%{{APP_VERSION}}%',
 };
 
-Object.assign(G, {
-  __RUNTIME_CONFIG_INJECT__: 1,
-});
+(function() {
+  const runtimeConfig = {
+    __RUNTIME_CONFIG_INJECT__: 1,
+  };
+
+  for (const p in runtimeConfig) {
+    if (Object.prototype.hasOwnProperty.call(runtimeConfig, p)) {
+      G[p] = runtimeConfig[p];
+    }
+  }
+})();
 
 G.base = '//' + location.hostname + (location.port ? ':' + location.port : '');
 if (!G.cdnBase) {
