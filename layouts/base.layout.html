@@ -31,9 +31,11 @@
     <!-- yield "content" --><!-- /yield -->
 
     <!-- yield "polyfill" -->
-    <script id="polyfill-script" type="text/template" data-src="/common/scripts/polyfill/main.js"></script>
     <script>
-      G.__REQUIRE_POLYFILL__ = !window.Promise || !window.fetch;
+      G.__REQUIRE_POLYFILL__ = !window.Promise || !window.fetch || !Object.entries || !''.includes;
+      if (G.__REQUIRE_POLYFILL__) {
+        document.write('<script src="/common/scripts/polyfill/main.js"></s' + 'cript>');
+      }
     </script>
     <!-- /yield -->
 

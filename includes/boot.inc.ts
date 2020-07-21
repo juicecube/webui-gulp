@@ -76,28 +76,12 @@
   if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
     removeNode('main-style');
     removeNode('main-script');
-    if (G.__REQUIRE_POLYFILL__) {
-      load('polyfill-script', function() {
-        boot();
-      });
-    } else {
-      removeNode('polyfill-script');
-      boot();
-    }
+    boot();
   } else {
     load('main-style', function() {
-      if (G.__REQUIRE_POLYFILL__) {
-        load('polyfill-script', function() {
-          load('main-script', function() {
-            boot();
-          });
-        });
-      } else {
-        removeNode('polyfill-script');
-        load('main-script', function() {
-          boot();
-        });
-      }
+      load('main-script', function() {
+        boot();
+      });
     });
   }
 })();
