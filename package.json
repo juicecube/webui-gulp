@@ -1,6 +1,6 @@
 {
   "name": "@mlz/webui-gulp",
-  "version": "0.70.0",
+  "version": "0.71.0",
   "description": "webui-gulp",
   "scripts": {
     "eslint": "eslint --ext js tasks index.js",
@@ -33,7 +33,7 @@
     "gulp-if": "^2.0.0",
     "gulp-img-css-sprite": "^0.6.0",
     "gulp-minifier": "^3.5.0",
-    "gulp-mt2amd": "^1.19.0",
+    "gulp-mt2amd": "^1.20.0",
     "gulp-postcss": "^8.0.0",
     "gulp-property-merge": "^0.6.0",
     "gulp-sourcemaps": "^2.6.5",
