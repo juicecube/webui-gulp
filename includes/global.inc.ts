@@ -21,7 +21,7 @@ const G: Record<string, any> = {
   }
 })();
 
-G.base = '//' + location.hostname + (location.port ? ':' + location.port : '');
+G.base = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
 if (!G.cdnBase) {
   G.cdnBase = G.base;
 }
