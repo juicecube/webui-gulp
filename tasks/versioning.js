@@ -4,17 +4,33 @@ const fs = require('fs'),
   conf = require('./conf'),
   digestVersioning = require('gulp-digest-versioning');
 
-function skipFileName(fileName) {
-  if (/chunk\.(\w{8})\.js$/.test(fileName)) {
+function skipFileName(fileName, md5List) {
+  if (/(&|\?)versioning:skip$/.test(fileName)) {
+    return true;
+  }
+
+  if (md5List.some(item => fileName.indexOf('.' + item + '.') > 0)) {
     return true;
   }
   return false;
 }
 
-function fixUrl(fileName, relPath, baseDir) {
-  if (/chunk\.(\w{8})\.js$/.test(fileName)) {
-    return fileName;
+function fixSkipUrl(fileName, relPath, baseDir) {
+  if (!/(&|\?)versioning:skip$/.test(fileName)) {
+    return fileName.replace(/(&|\?)versioning:\w+$/, '');
   }
+  return commonFixUrl(fileName, relPath, baseDir);
+}
+
+function fixUrl(fileName, relPath, baseDir) {
+  if (/(&|\?)versioning:base$/.test(fileName)) {
+    return fileName.replace(/(&|\?)versioning:\w+$/, '');
+  }
+  return commonFixUrl(fileName, relPath, baseDir);
+}
+
+function commonFixUrl(fileName, relPath, baseDir) {
+  fileName = fileName.replace(/(&|\?)versioning:\w+$/, '');
 
   if (!/^\//.test(fileName)) {
     const filePath = path.resolve(path.dirname(relPath), fileName);
@@ -33,6 +49,7 @@ gulp.task('versioning:asset', function() {
         destDir: 'build',
         appendToFileName: true,
         skipFileName: skipFileName,
+        fixSkipUrl: fixSkipUrl,
         fixUrl: fixUrl,
       }),
     )
@@ -49,6 +66,7 @@ gulp.task('versioning:html', function() {
         destDir: 'build',
         appendToFileName: true,
         skipFileName: skipFileName,
+        fixSkipUrl: fixSkipUrl,
         fixUrl: fixUrl,
       }),
     )
