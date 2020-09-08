@@ -1,6 +1,6 @@
 (function() {
   const port = '%{{liveReloadPort}}%' || '%{{DEFAULT_LIVE_RELOAD_PORT}}%';
-  const socket = (window as any).io('http://127.0.0.1:' + port);
+  const socket = (window as any).io(`http://${location.hostname}:${port}`);
   socket.on('reload', function(source) {
     console.log(`LiveReload triggered by file change "${source}" at ${new Date().toLocaleString()}`);
     if (/\.scss$/.test(source)) {
