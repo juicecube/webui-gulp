@@ -42,6 +42,7 @@ gulp.task('bundle:asset:ts', function() {
         rollup
           .rollup({
             input: file.path,
+            context: 'window',
             manualChunks:
               conf.bundleFormat === 'system'
                 ? function(id) {
