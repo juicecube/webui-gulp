@@ -9,6 +9,7 @@ const path = require('path'),
   userefCostomBlocks = require('./useref-custom-blocks'),
   lazyTasks = require('./lazy-tasks'),
   rollup = require('rollup'),
+  rollupEsbuild = require('rollup-plugin-esbuild'),
   rollupAnalyzer = require('rollup-plugin-analyzer'),
   rollupAlias = require('@rollup/plugin-alias'),
   rollupTypescript = require('@rollup/plugin-typescript'),
@@ -73,7 +74,12 @@ gulp.task('bundle:asset:ts', function() {
                   { find: 'react-dom/test-utils', replacement: 'preact/test-utils' },
                 ],
               }),
-              rollupTypescript(),
+              conf.ENV === 'local'
+                ? rollupEsbuild({
+                    sourceMap: true,
+                    target: 'esnext',
+                  })
+                : rollupTypescript(),
               rollupReplace({
                 ...envify({
                   NODE_ENV: conf.ENV,
