@@ -1,6 +1,6 @@
 {
   "name": "@mlz/webui-gulp",
-  "version": "0.76.1",
+  "version": "0.76.2",
   "description": "webui-gulp",
   "scripts": {
     "eslint": "eslint --ext js tasks index.js",
@@ -51,7 +51,7 @@
     "require-all": "^2.0.0",
     "rollup": "^2.6.1",
     "rollup-plugin-analyzer": "^3.2.2",
-    "rollup-plugin-esbuild": "^2.5.2",
+    "rollup-plugin-esbuild": "~2.5.2",
     "rollup-plugin-mt2amd": "^2.2.0",
     "rollup-plugin-scss": "^2.4.0",
     "rollup-plugin-vue": "^5.1.6",
