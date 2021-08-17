@@ -7,7 +7,7 @@ const babel = require('gulp-babel')
 const postcss = require('gulp-postcss')
 const postcssImport = require('postcss-import')
 const postcssPresetEnv = require('postcss-preset-env')
-const postcssPxToViewport = require('postcss-px-to-viewport')
+const postcssPxToViewport = require('@mlz/postcss-px-to-viewport')
 const through = require('through2')
 const conf = require('./conf')
 

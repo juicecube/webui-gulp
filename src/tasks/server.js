@@ -1,6 +1,6 @@
 const path = require('path')
 const { spawn } = require('child_process')
-const mt2amd = require('gulp-mt2amd')
+const mt2amd = require('@mlz/gulp-mt2amd')
 const DefaultRegistry = require('undertaker-registry')
 const util = require('../utils/util')
 

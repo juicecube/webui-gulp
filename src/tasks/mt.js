@@ -1,5 +1,5 @@
 const path = require('path')
-const mt2amd = require('gulp-mt2amd')
+const mt2amd = require('@mlz/gulp-mt2amd')
 const cache = require('../utils/cache')
 const util = require('../utils/util')
 const DefaultRegistry = require('undertaker-registry')

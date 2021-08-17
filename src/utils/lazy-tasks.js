@@ -3,7 +3,7 @@ const lazypipe = require('lazypipe')
 const postcss = require('gulp-postcss')
 const postcssImport = require('postcss-import')
 const postcssPresetEnv = require('postcss-preset-env')
-const postcssPxToViewport = require('postcss-px-to-viewport')
+const postcssPxToViewport = require('@mlz/postcss-px-to-viewport')
 const htmlI18n = require('gulp-html-i18n')
 
 exports.lazyPostcssTask = lazypipe().pipe(
