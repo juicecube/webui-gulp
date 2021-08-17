@@ -5,24 +5,16 @@
     "node": true
   },
   "globals": {},
-  "parser": "babel-eslint",
-  "plugins": [
-    "prettier"
-  ],
-  "extends": [
-    "eslint:recommended",
-    "plugin:prettier/recommended"
-  ],
+  "parser": "@babel/eslint-parser",
+  "plugins": ["prettier"],
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "rules": {
     "no-console": 0,
     "no-inner-declarations": 0,
     // Variables
     "no-unused-vars": 0,
     // Stylistic Issues
-    "consistent-this": [
-      2,
-      "self"
-    ],
+    "consistent-this": [2, "self"],
     "lines-between-class-members": [
       2,
       "always",
@@ -34,43 +26,23 @@
       2,
       {
         "blankLine": "always",
-        "prev": [
-          "export",
-          "class",
-          "block-like"
-        ],
-        "next": [
-          "export",
-          "class",
-          "block-like"
-        ]
+        "prev": ["export", "class", "block-like"],
+        "next": ["export", "class", "block-like"]
       },
       {
         "blankLine": "always",
-        "prev": [
-          "import",
-          "cjs-import"
-        ],
+        "prev": ["import", "cjs-import"],
         "next": "*"
       },
       {
         "blankLine": "never",
-        "prev": [
-          "import",
-          "cjs-import"
-        ],
-        "next": [
-          "import",
-          "cjs-import"
-        ]
+        "prev": ["import", "cjs-import"],
+        "next": ["import", "cjs-import"]
       },
       {
         "blankLine": "always",
         "prev": "*",
-        "next": [
-          "export",
-          "cjs-export"
-        ]
+        "next": ["export", "cjs-export"]
       }
     ],
     "prefer-const": [
@@ -84,9 +56,7 @@
       2,
       "always",
       {
-        "exceptions": [
-          "-+"
-        ]
+        "exceptions": ["-+"]
       }
     ],
     // Prettier

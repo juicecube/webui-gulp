@@ -1,33 +1,59 @@
-let gulp;
-
+const path = require('path');
 const requireAll = require('require-all');
-const conf = require('./tasks/conf');
+const DefaultRegistry = require('undertaker-registry');
 
-const webuiGulp = {
-  gulp: function() {
-    return gulp;
-  },
-
-  use: function(useGulp) {
-    if (useGulp) {
-      gulp = useGulp;
-    }
-    return webuiGulp;
-  },
-
-  loadTasks: function() {
+class WebuiTask extends DefaultRegistry {
+  init(gulp) {
     requireAll({
-      dirname: __dirname + '/tasks',
+      dirname: path.resolve(__dirname, 'src/tasks'),
       filter: /(.*)\.js$/,
-      recursive: true,
+      resolve: (TaskRegistry) => {
+        gulp.registry(new TaskRegistry());
+      },
     });
-    webuiGulp.loadTasks = function() {};
-    return webuiGulp;
-  },
 
-  getConfig: function() {
-    return conf;
-  },
-};
+    gulp.task('init', gulp.series('copy', 'mt'));
 
-module.exports = webuiGulp;
+    gulp.task(
+      'start',
+      gulp.series(
+        'clean:build',
+        'init',
+        'bundle:asset',
+        'postcss',
+        'sprite:img',
+        'sprite:css',
+        'bundle:html',
+        'server:tsc',
+        'server:tpl',
+        'clean:bundle',
+        'watch',
+      ),
+    );
+
+    gulp.task(
+      'build',
+      gulp.series(
+        'clean:build',
+        'init',
+        'imagemin',
+        'bundle:asset',
+        'babel',
+        'postcss',
+        'sus',
+        'sprite:img',
+        'sprite:css',
+        'versioning:asset',
+        'bundle:html',
+        'versioning:html',
+        'versioning:clean',
+        'minify',
+        'server:tsc',
+        'server:tpl',
+        'clean:bundle',
+      ),
+    );
+  }
+}
+
+module.exports = WebuiTask;
