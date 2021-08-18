@@ -7,6 +7,9 @@
     "eslint:fix": "eslint --ext js tasks index.js --fix",
     "prepare": "husky install"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "main": "index.js",
   "types": "types/index.d.ts",
   "dependencies": {
